@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Search Discoverability Review Queue | Mina Gayid</title>
+  <style>
+    :root{--ink:#1c2b39;--teal:#0c8d91;--mist:#e3e9ef;--paper:#f6f9fb;--muted:#566775}*{box-sizing:border-box}body{margin:0;background:var(--paper);font:16px/1.65 Inter,Arial,sans-serif;color:var(--ink)}main{max-width:900px;margin:auto;padding:48px 24px 80px}header{padding:18px 0 34px;border-bottom:1px solid var(--mist)}h1,h2{font-family:Georgia,serif;line-height:1.12}h1{font-size:clamp(2.2rem,6vw,4.5rem);margin:.2em 0}h2{font-size:1.7rem;margin:2.4em 0 .4em}.eyebrow{letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-size:.75rem;font-weight:700}.lede{font-size:1.15rem;max-width:720px}.meta{color:var(--muted);font-size:.9rem}.card{background:#fff;border:1px solid var(--mist);border-radius:14px;padding:22px;margin:18px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.metric{padding:18px;background:#fff;border-radius:12px;border:1px solid var(--mist)}.metric strong{display:block;font:2rem Georgia,serif;color:var(--teal)}table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--mist)}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--mist)}th{background:#eef5f6}svg{width:100%;height:auto;background:#fff;border:1px solid var(--mist);border-radius:12px}a{color:#08777b;font-weight:600}.note{border-left:4px solid var(--teal);padding:8px 16px;background:#edf8f8}@media(max-width:620px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body><main>
+<header>
+  <div class="eyebrow">FlyRank ML Internship · Capstone</div>
+  <h1>Turning search demand into a human review queue</h1>
+  <p class="lede">A transparent content-opportunity scorer ranks pages with substantial impressions, mid-page visibility, and under-captured clicks, so a reviewer can decide where title and metadata work may be worthwhile.</p>
+  <p class="meta">Mina Maged Zekry Gayid · Refresh / Content Opportunity Scoring lane · July 2026</p>
+</header>
+
+<h2>Abstract</h2>
+<p>This project asks which content items deserve a first human discoverability review. It uses public-safe, pseudonymized daily search-performance fields from the FlyRank ML Internship warehouse and a deliberately simple score based on impressions and observed click-through rate. A rule baseline produces a ranked queue with a reason code and an action label; a compact regularized score is evaluated against the same held-out review slice as a directional comparison. The model adds a modest lift over the rule while preserving interpretable recommendations. This is decision support, not a claim about Google ranking causality or the impact of any content change.</p>
+
+<h2>Problem statement</h2>
+<p>Content teams cannot inspect every URL. The decision supported here is: <em>which pages should a human review first for a possible title, meta-description, or query-intent mismatch?</em> The output is intentionally an ordered review queue, never an automatic publishing system.</p>
+
+<h2>Data</h2>
+<div class="card"><ul><li><strong>Release:</strong> FlyRank ML Internship warehouse on Hugging Face.</li><li><strong>Core table:</strong> <code>fact_content_daily_performance</code>, a pseudonymized content × client × report-date panel.</li><li><strong>Development window:</strong> March 2026; the final month remains outside development.</li><li><strong>Included:</strong> Search Console impressions, clicks, and average position where Search Console availability is true.</li><li><strong>Excluded:</strong> client names, domains, URLs, identifiers as features, raw exports, credentials, and any future-window or label-derived field.</li></ul></div>
+<div class="grid"><div class="metric"><strong>9.84M</strong>March page-day rows</div><div class="metric"><strong>413,966</strong>GA4-available rows</div><div class="metric"><strong>0</strong>duplicate page-day keys found</div></div>
+
+<h2>Methodology</h2>
+<p><strong>Signals.</strong> The scorer uses same-day impressions, clicks, CTR, and average position. High impressions are a volume/quick-win signal; CTR relative to position is a snippet-opportunity signal. All are knowable at the review decision moment.</p>
+<p><strong>Baseline.</strong> <code>score = impressions × (1 − CTR)</code>, restricted to pages with at least 100 impressions and average position 5–20. Every row receives the reason code <code>HIGH_IMPRESSIONS_LOW_CTR</code> and the action label <em>Review title and meta description</em>.</p>
+<p><strong>Comparison.</strong> The compact model is a regularized logistic score trained only on earlier grouped content histories, then checked on a later held-out review slice. Splits are grouped by content/client and ordered in time. A leakage check excludes future clicks and trend/label fields; the Week 3 deliberate-leak experiment showed why a future-derived field can create a perfect but invalid score.</p>
+
+<h2>Results</h2>
+<p>Directional held-out ranking results are shown below. The model is useful only because its lift is small, repeatable, and paired with human review—not because it proves a causal intervention effect.</p>
+<svg viewBox="0 0 760 270" role="img" aria-label="Bar chart comparing precision at ten for rule baseline and regularized score"><text x="45" y="35" font-size="18" fill="#1c2b39">Held-out review precision@10</text><line x1="120" y1="220" x2="710" y2="220" stroke="#566775"/><text x="120" y="245" font-size="14">Rule baseline</text><rect x="120" y="133" width="180" height="87" fill="#8fc7c9"/><text x="190" y="124" font-size="20" fill="#1c2b39">0.60</text><text x="430" y="245" font-size="14">Regularized score</text><rect x="430" y="104" width="180" height="116" fill="#0c8d91"/><text x="500" y="95" font-size="20" fill="#1c2b39">0.80</text><text x="34" y="220" font-size="12">0.0</text><text x="34" y="110" font-size="12">0.8</text></svg>
+<table><thead><tr><th>Approach</th><th>Held-out precision@10</th><th>Interpretation</th></tr></thead><tbody><tr><td>Transparent rule baseline</td><td>0.60</td><td>Six of the first ten were judged review-worthy.</td></tr><tr><td>Regularized score</td><td>0.80</td><td>Eight of the first ten were judged review-worthy.</td></tr></tbody></table>
+
+<h2>Ranked recommendations</h2>
+<div class="card"><ol><li><strong>Review title and meta description</strong> when high impressions meet a low CTR at positions 5–20.</li><li><strong>Check query intent and SERP features</strong> before changing copy; a low CTR may be rational.</li><li><strong>Check technical/indexing context</strong> when the page cannot plausibly satisfy the query.</li><li><strong>Monitor, do not edit</strong> if a one-day spike or position volatility explains the score.</li></ol><p class="meta">The reproducible queue writes to <code>work/outputs/baseline_action_score.csv</code> locally and is intentionally excluded from the public repository.</p></div>
+
+<h2>Limitations & honest framing</h2>
+<p class="note">Observed associations are not causal claims. Search demand, seasonality, query intent, snippets, SERP features, and content quality can all explain CTR. The score does not prove that refreshing a page changes Google performance. It is a directional, human-in-the-loop prioritization aid.</p>
+
+<h2>Reproducibility</h2>
+<p>The implementation and receipts are available in the public repository: <a href="https://github.com/minagayid/flyrank">repository</a>, <a href="https://github.com/minagayid/flyrank/blob/main/work/notebooks/w03_data_contract.ipynb">data contract notebook</a>, <a href="https://github.com/minagayid/flyrank/blob/main/work/notebooks/w04_baseline_score.ipynb">baseline notebook</a>, and <a href="https://github.com/minagayid/flyrank/blob/main/work/notebooks/capstone_refresh_scoring.ipynb">capstone notebook</a>.</p>
+
+<h2>Acknowledgments & data credit</h2>
+<p>Built on the <a href="https://flyrank.ai">FlyRank ML Internship dataset</a>. Thanks to the FlyRank internship program for the public-safe, pseudonymized learning release.</p>
+</main></body></html>
