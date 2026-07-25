@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Portfolio Evidence Editor — Mina Gayid</title>
+  <meta name="description" content="A browser-based evidence-first case-study editor with an explicit human review gate.">
+  <style>
+    :root{--ink:#172d2c;--teal:#0b766d;--paper:#f3f2ec;--card:#fff;--line:#ccd7d2;--warn:#9b4b20}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif}
+    header,main,footer{width:min(1040px,calc(100% - 2rem));margin:auto}header{padding:1rem 0;border-bottom:1px solid var(--line)}
+    header a{color:var(--ink);font-weight:800}main{padding:3rem 0 5rem}h1,h2{font-family:Georgia,serif;line-height:1.1}
+    h1{font-size:clamp(2.6rem,7vw,5.5rem);margin:.2rem 0 1rem}h2{margin-top:0}.lede{max-width:740px;color:#50645f;font-size:1.15rem}
+    .layout{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}.panel{padding:1.4rem;border:1px solid var(--line);border-radius:1rem;background:var(--card)}
+    label{display:grid;gap:.35rem;font-weight:750;margin:.8rem 0}textarea,select{width:100%;padding:.75rem;border:1px solid #9bada7;border-radius:.55rem;background:white;font:inherit}
+    textarea{min-height:260px;resize:vertical}button{padding:.75rem 1rem;border:0;border-radius:.55rem;background:var(--teal);color:white;font:inherit;font-weight:800;cursor:pointer}
+    button.secondary{background:transparent;color:var(--teal);border:1px solid var(--teal)}.actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+    .output{min-height:420px;white-space:pre-wrap}.flag{color:var(--warn);font-weight:750}.meta{color:#5e716c;font-size:.9rem}.gate{margin-top:1rem;padding:.9rem;border-left:4px solid #e1a43b;background:#fff6dc}
+    footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);color:#5e716c}
+    @media(max-width:760px){.layout{grid-template-columns:1fr}textarea{min-height:210px}}
+  </style>
+</head>
+<body>
+  <header><a href="../">← Mina Gayid portfolio</a></header>
+  <main>
+    <p class="meta">Portfolio Evidence Editor · v2 evaluation build</p>
+    <h1>Turn rough notes into a case you can defend.</h1>
+    <p class="lede">This small, deterministic browser tool structures supplied notes, highlights risky claim language, and leaves publication behind a human approval gate. Your notes never leave the browser.</p>
+    <div class="layout">
+      <section class="panel">
+        <h2>Project notes</h2>
+        <label>Audience
+          <select id="audience"><option>Employer</option><option>Technical peer</option><option>General public</option></select>
+        </label>
+        <label>Public-safe notes
+          <textarea id="notes" placeholder="Paste the problem, your role, method, evidence, and next step."></textarea>
+        </label>
+        <div class="actions">
+          <button id="run">Build evidence-first draft</button>
+          <button class="secondary" id="sample" type="button">Load safe sample</button>
+          <button class="secondary" id="demo" type="button">Start narrated demo</button>
+        </div>
+        <p class="meta" id="demo-status" aria-live="polite">Narrated demo: ready. Browser speech may require sound permission.</p>
+      </section>
+      <section class="panel">
+        <h2>Review draft</h2>
+        <div class="output" id="output">Add notes or load the public-safe sample. The editor will never invent a missing metric or outcome.</div>
+        <div class="gate"><strong>Human gate:</strong> verify every metric, privacy boundary, and publication decision before using this draft.</div>
+      </section>
+    </div>
+  </main>
+  <footer>Built as a transparent rule-based workflow. No API key, backend, or private data transfer.</footer>
+  <script>
+    const notes = document.querySelector('#notes');
+    const output = document.querySelector('#output');
+    const audience = document.querySelector('#audience');
+    const safeSample = `Problem: Content teams cannot inspect every page.
+Role: I designed a public-safe review queue and documented the decision boundary.
+Method: I compared an impressions × (1 − CTR) baseline with a regularized score on the same held-out slice.
+Evidence: Precision at 10 was 0.60 for the rule and 0.80 for the comparison score.
+Limitation: This is directional decision support, not evidence that an edit causes higher rankings.
+Next step: A reviewer checks query intent and SERP context before any content change.`;
+
+    function sentence(label, fallback) {
+      const match = notes.value.split(/\n+/).find(line => line.toLowerCase().startsWith(label.toLowerCase() + ':'));
+      return match ? match.slice(match.indexOf(':') + 1).trim() : fallback;
+    }
+    function riskyClaims(text) {
+      const risky = ['guarantee','proved','always','best','perfect','caused','predicts google'];
+      return risky.filter(term => text.toLowerCase().includes(term));
+    }
+    function buildDraft() {
+      const text = notes.value.trim();
+      if (!text) { output.textContent = 'Add notes first. Missing input is not evidence.'; return; }
+      const risks = riskyClaims(text);
+      const numbers = text.match(/\b\d+(?:\.\d+)?%?\b/g) || [];
+      output.textContent =
+`AUDIENCE
+${audience.value}
+
+CONTEXT
+${sentence('Problem','Missing: state the real problem.')}
+
+ROLE
+${sentence('Role','Missing: name your contribution.')}
+
+APPROACH
+${sentence('Method','Missing: explain what you did.')}
+
+EVIDENCE
+${sentence('Evidence','Missing: add an observed result.')}
+
+LIMITATION
+${sentence('Limitation','Missing: name where this can fail.')}
+
+NEXT STEP
+${sentence('Next step','Missing: give the reader one action.')}
+
+CLAIM AUDIT
+Observed numeric tokens: ${numbers.length ? numbers.join(', ') : 'none supplied'}
+Risky absolute language: ${risks.length ? risks.join(', ') : 'none detected'}
+Status: ${risks.length ? 'REVISE BEFORE PUBLISHING' : 'READY FOR HUMAN FACT-CHECK'}`;
+    }
+    document.querySelector('#run').addEventListener('click', buildDraft);
+    document.querySelector('#sample').addEventListener('click', () => { notes.value = safeSample; buildDraft(); });
+
+    document.querySelector('#demo').addEventListener('click', () => {
+      speechSynthesis.cancel();
+      const script = [
+        'This is a live demonstration of the Portfolio Evidence Editor. The tool is designed for a job seeker who has rough project notes and needs a truthful case study draft.',
+        'I will load a public-safe sample from the FlyRank search discoverability capstone. Notice that it contains a problem, a specific role, the method, two measured precision values, an honest limitation, and a next step.',
+        'The notes stay in this browser. There is no backend and no external model call. That is a deliberate privacy boundary: the tool can structure what it receives, but it cannot recover missing evidence.',
+        'Now the editor builds a five-part case. It separates context, role, approach, evidence, limitation, and next action so a reviewer can inspect each claim.',
+        'The claim audit extracts numeric tokens and searches for absolute language such as guaranteed, perfect, or caused. This is a guardrail, not a truth detector. A sentence can still be wrong even when no risky word appears.',
+        'The main design decision was to keep the workflow deterministic and transparent. That makes the output reproducible and prevents an AI service from inventing persuasive but unsupported details.',
+        'The key limitation is equally important: this version does not understand context the way a human editor does. It relies on labeled note lines and a small risky-language list. A human must verify every metric and privacy boundary.',
+        'The run is complete. The draft is ready for human fact checking, not automatic publication. That final gate is the feature, not an inconvenience.'
+      ];
+      notes.value = safeSample;
+      buildDraft();
+      let index = 0;
+      const status = document.querySelector('#demo-status');
+      function speakNext() {
+        if (index >= script.length) { status.textContent = 'Narrated demo complete — live run, design decision, guardrail, and limitation shown.'; return; }
+        status.textContent = `Narrated demo section ${index + 1} of ${script.length}`;
+        const utterance = new SpeechSynthesisUtterance(script[index++]);
+        utterance.rate = .86;
+        utterance.onend = speakNext;
+        speechSynthesis.speak(utterance);
+      }
+      speakNext();
+    });
+  </script>
+</body>
+</html>

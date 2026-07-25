@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mina Gayid — Applied AI & Machine Learning</title>
+  <meta name="description" content="Mina Gayid builds public-safe, reproducible AI and machine-learning tools that turn ambiguous evidence into clear decisions.">
+  <meta name="theme-color" content="#0b2725">
+  <meta property="og:title" content="Mina Gayid — Applied AI & Machine Learning">
+  <meta property="og:description" content="Reproducible ML research, practical AI tools, and honest decision support.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://minagayid.github.io/flyrank/">
+  <meta property="og:image" content="https://minagayid.github.io/flyrank/portfolio/week-03/assets/mg-monogram.svg">
+  <link rel="canonical" href="https://minagayid.github.io/flyrank/">
+  <link rel="icon" href="portfolio/week-03/assets/mg-monogram.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --ink: #102a2a;
+      --paper: #f4f3ed;
+      --card: #fffef9;
+      --line: #c8d4cf;
+      --accent: #0d7c73;
+      --accent-strong: #075c56;
+      --sun: #efb84c;
+      --muted: #526661;
+      --shadow: 0 22px 60px rgba(16, 42, 42, .11);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(239,184,76,.2), transparent 32rem),
+        linear-gradient(180deg, #f7f6f0 0%, var(--paper) 100%);
+      color: var(--ink);
+      font: 16px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: var(--accent-strong); text-underline-offset: .18em; }
+    a:hover { color: var(--accent); }
+    .skip {
+      position: absolute; left: -999px; top: .5rem; z-index: 10;
+      background: var(--ink); color: white; padding: .6rem 1rem; border-radius: .5rem;
+    }
+    .skip:focus { left: .5rem; }
+    header, main, footer { width: min(1120px, calc(100% - 2rem)); margin-inline: auto; }
+    nav {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 1.1rem 0;
+    }
+    .brand { display: flex; align-items: center; gap: .7rem; color: var(--ink); text-decoration: none; font-weight: 800; }
+    .mark { display: grid; place-items: center; width: 2.3rem; aspect-ratio: 1; border-radius: 50%; background: var(--ink); color: white; }
+    .navlinks { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .navlinks a { color: var(--ink); font-weight: 650; text-decoration: none; }
+    .hero { padding: clamp(4rem, 10vw, 8rem) 0 5rem; }
+    .eyebrow { margin: 0 0 1rem; color: var(--accent-strong); font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; line-height: 1.08; letter-spacing: -.025em; }
+    h1 { max-width: 920px; margin: 0; font-size: clamp(3rem, 8vw, 6.9rem); font-weight: 500; }
+    .lede { max-width: 770px; margin: 1.8rem 0 0; color: var(--muted); font-size: clamp(1.15rem, 2.2vw, 1.45rem); }
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 46px;
+      padding: .7rem 1rem; border: 1px solid var(--ink); border-radius: 999px;
+      background: var(--ink); color: white; font-weight: 750; text-decoration: none;
+    }
+    .button.secondary { background: transparent; color: var(--ink); }
+    section { padding: 4rem 0; border-top: 1px solid var(--line); }
+    .section-head { display: grid; grid-template-columns: .55fr 1.45fr; gap: 2rem; align-items: end; margin-bottom: 2rem; }
+    h2 { margin: 0; font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 500; }
+    .section-head p { margin: 0; max-width: 680px; color: var(--muted); font-size: 1.1rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .card {
+      display: flex; flex-direction: column; min-height: 320px; padding: clamp(1.25rem, 4vw, 2rem);
+      border: 1px solid var(--line); border-radius: 1.2rem; background: var(--card); box-shadow: var(--shadow);
+    }
+    .card .tag { color: var(--accent-strong); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .card h3 { margin: .6rem 0 .8rem; font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 500; }
+    .card p { margin: 0; color: var(--muted); }
+    .card .links { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: auto; padding-top: 1.5rem; }
+    .card .links a { font-weight: 750; }
+    .lab {
+      display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 1rem;
+      padding: clamp(1.25rem, 4vw, 2rem); border-radius: 1.2rem; background: var(--ink); color: white;
+    }
+    .lab p { color: #c8d9d5; }
+    .form-grid { display: grid; gap: .9rem; }
+    label { display: grid; gap: .35rem; color: #e5efec; font-weight: 700; }
+    input {
+      width: 100%; min-height: 46px; padding: .7rem .8rem; border: 1px solid #64807a; border-radius: .65rem;
+      background: #fff; color: var(--ink); font: inherit;
+    }
+    button {
+      min-height: 46px; padding: .7rem 1rem; border: 0; border-radius: .65rem;
+      background: var(--sun); color: #2c2517; font: inherit; font-weight: 850; cursor: pointer;
+    }
+    button:hover { filter: brightness(.97); }
+    .result { min-height: 5.5rem; padding: 1rem; border: 1px solid #42635d; border-radius: .8rem; background: #123b37; }
+    .result strong { color: #ffcd70; }
+    .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .fact { padding: 1.2rem 0; border-top: 2px solid var(--accent); }
+    .fact strong { display: block; font: 500 2rem/1 Georgia, serif; }
+    .fact span { color: var(--muted); }
+    footer { padding: 2rem 0 3rem; border-top: 1px solid var(--line); color: var(--muted); }
+    .footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+    .credential { display: inline-flex; align-items: center; gap: .45rem; }
+    .dot { width: .55rem; height: .55rem; border-radius: 50%; background: var(--sun); }
+    @media (max-width: 760px) {
+      nav, .section-head, .lab { grid-template-columns: 1fr; }
+      nav { align-items: flex-start; }
+      .grid { grid-template-columns: 1fr; }
+      .facts { grid-template-columns: 1fr; }
+      .hero { padding-top: 3.2rem; }
+      .card { min-height: 0; }
+    }
+    @media (max-width: 480px) {
+      header, main, footer { width: min(100% - 1.2rem, 1120px); }
+      .navlinks { gap: .7rem; font-size: .92rem; }
+      h1 { font-size: clamp(2.65rem, 14vw, 4rem); }
+      .actions .button { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header>
+    <nav aria-label="Primary navigation">
+      <a class="brand" href="#top"><span class="mark" aria-hidden="true">MG</span><span>Mina Gayid</span></a>
+      <div class="navlinks">
+        <a href="#work">Work</a>
+        <a href="#lab">Live tool</a>
+        <a href="#about">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section class="hero" id="top">
+      <p class="eyebrow">Applied AI · Machine Learning · Evidence-first building</p>
+      <h1>I turn ambiguous AI problems into useful, inspectable tools.</h1>
+      <p class="lede">I’m Mina, an applied-AI and machine-learning builder. My work pairs reproducible analysis with plain-language decisions—without hiding uncertainty or overclaiming what the data proves.</p>
+      <div class="actions">
+        <a class="button" href="#work">See selected work</a>
+        <a class="button secondary" href="https://github.com/minagayid">View GitHub</a>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="section-head">
+        <h2>Selected work</h2>
+        <p>Two projects show the through-line: make the evidence legible, preserve the privacy boundary, and leave a human in control of consequential decisions.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">Machine-learning capstone</span>
+          <h3>Search discoverability review queue</h3>
+          <p>A transparent scorer prioritizes content for human title and metadata review. The paper compares a rule baseline with a regularized score on the same held-out slice and frames every result as directional decision support.</p>
+          <div class="links">
+            <a href="capstone/">Read the paper</a>
+            <a href="https://github.com/minagayid/flyrank/blob/main/work/notebooks/capstone_refresh_scoring.ipynb">Inspect the notebook</a>
+          </div>
+        </article>
+        <article class="card">
+          <span class="tag">General AI fluency</span>
+          <h3>Portfolio Evidence Editor</h3>
+          <p>A small browser tool turns rough project notes into an evidence-first case-study draft. It makes unsupported claims visible and keeps publication behind a human review step.</p>
+          <div class="links">
+            <a href="agent/">Try the tool</a>
+            <a href="https://github.com/minagayid/flyrank/blob/main/portfolio/week-08/agent-readme.md">Read the documentation</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="lab">
+      <div class="section-head">
+        <h2>One live feature</h2>
+        <p>This deliberately small calculator exposes the capstone’s transparent baseline. It runs entirely in your browser: no form data is uploaded or stored.</p>
+      </div>
+      <div class="lab">
+        <div>
+          <p class="eyebrow" style="color:#ffcd70">Content opportunity scorer</p>
+          <h3 style="font-size:clamp(2rem,4vw,3.2rem);margin:.3rem 0 1rem">Should this page enter the review queue?</h3>
+          <p>The baseline admits pages with at least 100 impressions and an average search position from 5 to 20, then computes <strong>impressions × (1 − CTR)</strong>. It prioritizes review; it does not prescribe an edit.</p>
+          <div class="result" id="score-result" role="status" aria-live="polite">Enter public-safe aggregate values to run the scorer.</div>
+        </div>
+        <form class="form-grid" id="score-form">
+          <label>Impressions
+            <input id="impressions" name="impressions" type="number" min="0" step="1" value="1200" required>
+          </label>
+          <label>Clicks
+            <input id="clicks" name="clicks" type="number" min="0" step="1" value="36" required>
+          </label>
+          <label>Average search position
+            <input id="position" name="position" type="number" min="1" step="0.1" value="11.4" required>
+          </label>
+          <button type="submit">Score this page</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-head">
+        <h2>How I work</h2>
+        <p>My strongest work is not the fanciest model. It is the shortest trustworthy path from a messy question to an auditable recommendation.</p>
+      </div>
+      <div class="facts">
+        <div class="fact"><strong>Public-safe</strong><span>No client names, URLs, credentials, or raw private exports.</span></div>
+        <div class="fact"><strong>Reproducible</strong><span>Notebooks, assumptions, and validation choices remain inspectable.</span></div>
+        <div class="fact"><strong>Human-led</strong><span>Models rank attention; people decide what should change.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-row">
+      <span>© 2026 Mina Maged Zekry Gayid</span>
+      <span class="credential"><span class="dot" aria-hidden="true"></span>FlyRank credential pending capstone review</span>
+      <span id="analytics-status">Privacy-friendly pageview counter loading…</span>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.querySelector('#score-form');
+    const result = document.querySelector('#score-result');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const impressions = Number(document.querySelector('#impressions').value);
+      const clicks = Number(document.querySelector('#clicks').value);
+      const position = Number(document.querySelector('#position').value);
+      if (![impressions, clicks, position].every(Number.isFinite) || impressions < 0 || clicks < 0 || position < 1) {
+        result.textContent = 'Use non-negative numbers and a search position of 1 or greater.';
+        return;
+      }
+      if (clicks > impressions) {
+        result.textContent = 'Clicks cannot exceed impressions. Check the aggregate values and try again.';
+        return;
+      }
+      const ctr = impressions === 0 ? 0 : clicks / impressions;
+      const eligible = impressions >= 100 && position >= 5 && position <= 20;
+      const score = impressions * (1 - ctr);
+      result.innerHTML = eligible
+        ? `<strong>Review candidate · score ${score.toFixed(1)}</strong><br>Observed CTR ${(ctr * 100).toFixed(2)}%. Check query intent and SERP context before changing the title or description.`
+        : `<strong>Monitor, do not prioritize yet.</strong><br>Observed CTR ${(ctr * 100).toFixed(2)}%. This page is outside the baseline’s volume/position gate.`;
+    });
+
+    fetch('https://api.counterapi.dev/v1/minagayid-flyrank/portfolio-pageviews/up', { mode: 'cors' })
+      .then(response => response.ok ? response.json() : Promise.reject())
+      .then(data => {
+        const count = data.count ?? data.value ?? data.data?.up_count;
+        document.querySelector('#analytics-status').textContent =
+          Number.isFinite(Number(count)) ? `${Number(count).toLocaleString()} anonymous pageviews` : 'Anonymous analytics active';
+      })
+      .catch(() => { document.querySelector('#analytics-status').textContent = 'Anonymous analytics installed'; });
+  </script>
+</body>
+</html>
