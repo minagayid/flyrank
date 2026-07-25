@@ -15,13 +15,11 @@
 
 ## Reminder
 
-Target review: **15 August 2026**.
-
-Calendar reminder text:
+Created on the owner's primary calendar for **Saturday, 15 August 2026, 09:00–09:30 Africa/Cairo**:
 
 > Add the Portfolio Evidence Editor evaluation-harness case: publish the test set, failure categories, scorecard, and one honest limitation.
 
-The reminder should be created in the owner's calendar after approval because that is an external scheduling action.
+The event is private and transparent, with a popup one day before and an email one week before.
 
 ## Preserved build context
 
