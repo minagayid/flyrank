@@ -2,6 +2,8 @@
 
 Live address: https://minagayid.github.io/flyrank/
 
+Analytics proof: [live footer screenshot](analytics-proof.png)
+
 ## Address and HTTPS
 
 The portfolio is live on the clean, zero-budget GitHub Pages fallback and is served over HTTPS. A paid personal domain is intentionally deferred rather than purchased without the owner's approval.

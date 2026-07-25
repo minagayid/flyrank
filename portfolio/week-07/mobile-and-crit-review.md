@@ -2,6 +2,8 @@
 
 Live portfolio: https://minagayid.github.io/flyrank/
 
+Mobile after-check: [390 × 844 screenshot](mobile-after.png)
+
 ## Proof statement
 
 I turn ambiguous AI and machine-learning problems into useful, inspectable tools: public-safe inputs, reproducible evidence, honest limitations, and a clear human decision at the end.
