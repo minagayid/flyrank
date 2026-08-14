@@ -1,0 +1,155 @@
+{
+  "suite": {
+    "name": "Portfolio Evidence Editor public evaluation harness",
+    "version": "2026-08-14",
+    "privacy": "Synthetic public-safe notes only. No client names, URLs, credentials, private exports, or raw queries.",
+    "baseline": "formatter-only baseline: labeled-section formatting without missing-section, risky-language, numeric-token, or empty-input detection",
+    "v2": "the deterministic browser rules currently shipped in agent/index.html"
+  },
+  "cases": [
+    {
+      "id": "complete-labeled",
+      "category": "complete-input",
+      "signals": ["complete_input", "numeric_audit"],
+      "notes": "Problem: Content teams cannot inspect every page.\nRole: I designed a public-safe review queue and documented the decision boundary.\nMethod: I compared a transparent rule with a regularized score on the same held-out slice.\nEvidence: Precision at 10 was 0.60 for the rule and 0.80 for the comparison score.\nLimitation: This is directional decision support, not causal evidence.\nNext step: A reviewer checks intent and SERP context before any content change.",
+      "expected": {
+        "status": "READY FOR HUMAN FACT-CHECK",
+        "missing_sections": [],
+        "risk_terms": [],
+        "numeric_tokens": ["10", "0.60", "0.80"]
+      }
+    },
+    {
+      "id": "missing-evidence",
+      "category": "missing-section",
+      "signals": ["missing_section"],
+      "notes": "Problem: A portfolio draft can sound polished before its proof is attached.\nRole: I designed a checklist for evidence-first writing.\nMethod: I separated the problem, contribution, and review step.\nLimitation: The checklist cannot create evidence that was never collected.\nNext step: Add one inspectable artifact before publishing.",
+      "expected": {
+        "status": "READY FOR HUMAN FACT-CHECK",
+        "missing_sections": ["Evidence"],
+        "risk_terms": [],
+        "numeric_tokens": []
+      }
+    },
+    {
+      "id": "risky-guarantee",
+      "category": "risky-language",
+      "signals": ["risky_language"],
+      "notes": "Problem: Reviewers need a quick way to see unsupported certainty.\nRole: I built a small claim audit.\nMethod: I scan supplied notes for a short list of risky terms.\nEvidence: The audit can flag the word guarantee before a human review.\nLimitation: The list is deliberately small.\nNext step: Replace absolute wording with a measured observation.",
+      "expected": {
+        "status": "REVISE BEFORE PUBLISHING",
+        "missing_sections": [],
+        "risk_terms": ["guarantee"],
+        "numeric_tokens": []
+      }
+    },
+    {
+      "id": "risky-caused",
+      "category": "risky-language",
+      "signals": ["risky_language", "numeric_audit"],
+      "notes": "Problem: A before-and-after gap can be overstated as a causal result.\nRole: I wrote a review note that keeps the decision boundary visible.\nMethod: I compare measured values without claiming an intervention.\nEvidence: The observed rate moved from 1.4 to 2.1, but the edit caused the change is not established.\nLimitation: This is not a controlled experiment.\nNext step: Say observed or associated, then name the missing design.",
+      "expected": {
+        "status": "REVISE BEFORE PUBLISHING",
+        "missing_sections": [],
+        "risk_terms": ["caused"],
+        "numeric_tokens": ["1.4", "2.1"]
+      }
+    },
+    {
+      "id": "numeric-only",
+      "category": "numeric-claim",
+      "signals": ["complete_input", "numeric_audit"],
+      "notes": "Problem: Numeric claims are easy to copy without checking their source.\nRole: I added a visible numeric-token audit to the editor.\nMethod: I extract number-like tokens from the supplied note.\nEvidence: Precision at 10 was 0.73 on a public-safe review slice.\nLimitation: Token extraction does not verify the number.\nNext step: Check each token against the underlying artifact.",
+      "expected": {
+        "status": "READY FOR HUMAN FACT-CHECK",
+        "missing_sections": [],
+        "risk_terms": [],
+        "numeric_tokens": ["10", "0.73"]
+      }
+    },
+    {
+      "id": "empty-input",
+      "category": "empty-input",
+      "signals": ["empty_refusal"],
+      "notes": "",
+      "expected": {
+        "status": "REFUSED_EMPTY",
+        "missing_sections": [],
+        "risk_terms": [],
+        "numeric_tokens": []
+      }
+    },
+    {
+      "id": "missing-limitation",
+      "category": "missing-section",
+      "signals": ["missing_section"],
+      "notes": "Problem: Readers need to know where a small tool can fail.\nRole: I documented a deterministic evidence workflow.\nMethod: I kept formatting and claim scanning in the browser.\nEvidence: The same input produces the same draft on repeat runs.\nNext step: Ask a human reviewer to name the boundary before publication.",
+      "expected": {
+        "status": "READY FOR HUMAN FACT-CHECK",
+        "missing_sections": ["Limitation"],
+        "risk_terms": [],
+        "numeric_tokens": []
+      }
+    },
+    {
+      "id": "missing-role",
+      "category": "missing-section",
+      "signals": ["missing_section"],
+      "notes": "Problem: A case study should distinguish the project from the author's contribution.\nMethod: I separated supplied evidence from the final editorial decision.\nEvidence: The draft keeps the evidence section visible.\nLimitation: A parser cannot infer ownership from prose alone.\nNext step: Add a precise role statement.",
+      "expected": {
+        "status": "READY FOR HUMAN FACT-CHECK",
+        "missing_sections": ["Role"],
+        "risk_terms": [],
+        "numeric_tokens": []
+      }
+    },
+    {
+      "id": "lowercase-labels",
+      "category": "complete-input",
+      "signals": ["complete_input", "numeric_audit"],
+      "notes": "problem: Simple notes should not fail because a label is lowercase.\nrole: I checked the parser's case-insensitive labels.\nmethod: I used the same six labeled lines as the browser tool.\nevidence: The repeat run returned 8 sections in the expected order.\nlimitation: Label matching still expects one labeled line per section.\nnext step: Keep the labels visible for the reviewer.",
+      "expected": {
+        "status": "READY FOR HUMAN FACT-CHECK",
+        "missing_sections": [],
+        "risk_terms": [],
+        "numeric_tokens": ["8"]
+      }
+    },
+    {
+      "id": "multiple-numbers",
+      "category": "numeric-claim",
+      "signals": ["complete_input", "numeric_audit"],
+      "notes": "Problem: A scorecard should surface more than the first number in a sentence.\nRole: I prepared a small public comparison.\nMethod: I recorded the sample count and two measured precision values.\nEvidence: The sample used n=48; precision at 10 was 0.91 for v2 and 0.88 for the baseline.\nLimitation: The sample is a harness fixture, not a production benchmark.\nNext step: Re-run the harness after changing the parser.",
+      "expected": {
+        "status": "READY FOR HUMAN FACT-CHECK",
+        "missing_sections": [],
+        "risk_terms": [],
+        "numeric_tokens": ["48", "10", "0.91", "0.88"]
+      }
+    },
+    {
+      "id": "risky-best",
+      "category": "risky-language",
+      "signals": ["risky_language"],
+      "notes": "Problem: Superlatives can make a small case sound larger than its evidence.\nRole: I added a review step for unsupported positioning.\nMethod: I scan the supplied text before formatting the draft.\nEvidence: The phrase best in class is a claim to review, not a measured result.\nLimitation: The detector does not understand every synonym.\nNext step: Replace the phrase with a comparison and its sample.",
+      "expected": {
+        "status": "REVISE BEFORE PUBLISHING",
+        "missing_sections": [],
+        "risk_terms": ["best"],
+        "numeric_tokens": []
+      }
+    },
+    {
+      "id": "privacy-safe-note",
+      "category": "complete-input",
+      "signals": ["complete_input"],
+      "notes": "Problem: Public case studies need a clear publication boundary.\nRole: I removed client names, URLs, raw queries, and credentials before drafting.\nMethod: I used only synthetic notes and inspectable public artifacts.\nEvidence: The published case contains no private identifiers or raw exports.\nLimitation: A text parser cannot prove that a supplied note is safe.\nNext step: A human checks privacy before every publication.",
+      "expected": {
+        "status": "READY FOR HUMAN FACT-CHECK",
+        "missing_sections": [],
+        "risk_terms": [],
+        "numeric_tokens": []
+      }
+    }
+  ]
+}
