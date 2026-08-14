@@ -21,6 +21,12 @@ Created on the owner's primary calendar for **Saturday, 15 August 2026, 09:00–
 
 The event is private and transparent, with a popup one day before and an email one week before.
 
+## Published follow-up
+
+Completed on **14 August 2026**: [Portfolio Evidence Editor evaluation harness](../cases/portfolio-evidence-editor-harness/README.md).
+
+It publishes a 12-case synthetic public test set, failure categories, a v2-versus-baseline scorecard, and one honest limitation. The known limitation is that deterministic fixture checks cannot establish semantic truth or privacy safety; a human still verifies every metric and publication decision.
+
 ## Preserved build context
 
 The repository retains the identity kit, content map, agent design, build notes, capstone paper, and Week 7–9 evidence files. Those public-safe references preserve the voice, stack, proof statement, and publication boundary for the next case.
