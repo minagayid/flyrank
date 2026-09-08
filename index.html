@@ -6,6 +6,7 @@
   <title>Mina Gayid — Applied AI & Machine Learning</title>
   <meta name="description" content="Mina Gayid builds public-safe, reproducible AI and machine-learning tools that turn ambiguous evidence into clear decisions.">
   <meta name="theme-color" content="#0b2725">
+  <meta name="mina-ai-bridge" content="">
   <meta property="og:title" content="Mina Gayid — Applied AI & Machine Learning">
   <meta property="og:description" content="Reproducible ML research, practical AI tools, and honest decision support.">
   <meta property="og:type" content="website">
@@ -257,15 +258,12 @@
     </div>
   </footer>
 
-  <button class="assistant-toggle" id="assistantToggle" type="button" aria-expanded="false" aria-controls="assistantPanel"><span class="assistant-dot" aria-hidden="true"></span><span class="assistant-toggle-copy"><strong>Mina AI</strong><small>Evidence-first guide</small></span><span class="assistant-toggle-action">Open</span></button>
+  <button class="assistant-toggle" id="assistantToggle" type="button" aria-expanded="false" aria-controls="assistantPanel"><span class="assistant-dot" aria-hidden="true"></span><span class="assistant-toggle-copy"><strong>Mina AI</strong><small>How can I help?</small></span><span class="assistant-toggle-action">Open</span></button>
   <aside class="assistant-panel" id="assistantPanel" hidden role="dialog" aria-label="Mina AI evidence guide">
-    <div class="assistant-head"><div class="assistant-mark">M</div><div><strong>Mina AI</strong><small>Capstone and portfolio guide</small><small id="assistantStatus">Protected mode · ready</small></div><button class="assistant-close" id="assistantClose" type="button" aria-label="Close assistant">&times;</button></div>
+    <div class="assistant-head"><div class="assistant-mark">M</div><div><strong>Mina AI</strong><small>How can I help?</small></div><button class="assistant-close" id="assistantClose" type="button" aria-label="Close assistant">&times;</button></div>
     <div class="assistant-body">
-      <div id="assistantTranscript" aria-live="polite"><p class="assistant-message">I can explain the capstone, the evidence-first editor, and how Mina keeps a human in the loop. Ask about the work or its limits.</p></div>
-      <div class="assistant-trust" aria-label="Assistant safeguards"><span>Synthetic context</span><span>No credentials</span><span>Human review</span></div>
-      <div class="assistant-options" aria-label="Suggested questions"><button type="button" data-assistant-question="What does the capstone measure?">Capstone</button><button type="button" data-assistant-question="How does the evidence editor work?">Editor</button><button type="button" data-assistant-question="What are the limits of the live scorer?">Limits</button></div>
-      <form class="assistant-form" id="assistantForm"><label class="sr-only" for="assistantInput">Ask Mina AI about this portfolio</label><input id="assistantInput" maxlength="600" autocomplete="off" placeholder="Ask about the evidence..."><button type="submit">Ask</button></form>
-      <p class="assistant-note">This guide uses the public portfolio only. It does not upload notes or make publication decisions.</p>
+      <div id="assistantTranscript" aria-live="polite"><p class="assistant-message">Hi — how can I help you today?</p></div>
+      <form class="assistant-form" id="assistantForm"><label class="sr-only" for="assistantInput">Ask Mina AI about this portfolio</label><input id="assistantInput" maxlength="600" autocomplete="off" placeholder="Type a message..."><button type="submit">Send</button></form>
     </div>
   </aside>
 
@@ -308,7 +306,6 @@
     const assistantForm = document.querySelector('#assistantForm');
     const assistantInput = document.querySelector('#assistantInput');
     const assistantTranscript = document.querySelector('#assistantTranscript');
-    const assistantStatus = document.querySelector('#assistantStatus');
     function addAssistantMessage(text, kind) {
       const message = document.createElement('p');
       message.className = 'assistant-message' + (kind === 'user' ? ' user' : '');
@@ -325,6 +322,21 @@
       if (q.includes('mina') || q.includes('work') || q.includes('skill')) return 'Mina builds inspectable AI and machine-learning tools, combining reproducible analysis with plain-language decisions. Her approach keeps uncertainty visible and people responsible for consequential choices.';
       return 'Ask about the capstone, the evidence editor, the live scorer, or the limits and privacy boundary.';
     }
+    const bridgeUrl = document.querySelector('meta[name="mina-ai-bridge"]')?.content || '';
+    function withTimeout(promise, ms) {
+      return Promise.race([promise, new Promise((_, reject) => window.setTimeout(() => reject(new Error('timeout')), ms))]);
+    }
+    async function requestOracle(question, recent) {
+      let target = bridgeUrl;
+      if (!target) {
+        try { target = String((await fetch('assistant-bridge.json', { cache: 'no-store' }).then((response) => response.ok ? response.json() : {})).url || ''); } catch (_) { target = ''; }
+      }
+      if (!target) return '';
+      const result = await withTimeout(fetch(target, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question, history: recent, site: 'flyrank' }) }), 6500);
+      if (!result.ok) return '';
+      const payload = await result.json();
+      return String(payload.answer || '').trim();
+    }
     function setAssistantOpen(open) {
       assistantPanel.hidden = !open;
       assistantToggle.setAttribute('aria-expanded', String(open));
@@ -339,19 +351,14 @@
       addAssistantMessage(question, 'user');
       assistantInput.value = '';
       assistantInput.disabled = true;
-      assistantStatus.textContent = 'Grounded guide · answering';
       const answer = addAssistantMessage('Reviewing the public evidence…', 'assistant');
-      window.setTimeout(() => {
-        answer.textContent = assistantReply(question);
+      const recent = Array.from(assistantTranscript.querySelectorAll('.assistant-message')).slice(-7).map((element) => ({ role: element.classList.contains('user') ? 'user' : 'assistant', content: element.textContent }));
+      requestOracle(question, recent).catch(() => '').then((oracleAnswer) => {
+        answer.textContent = oracleAnswer || assistantReply(question);
         assistantInput.disabled = false;
-        assistantStatus.textContent = 'Protected mode · ready';
         assistantInput.focus();
-      }, 180);
+      });
     });
-    document.querySelectorAll('[data-assistant-question]').forEach((button) => button.addEventListener('click', () => {
-      assistantInput.value = button.dataset.assistantQuestion || '';
-      assistantForm.requestSubmit();
-    }));
   </script>
 </body>
 </html>

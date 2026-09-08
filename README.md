@@ -2,6 +2,8 @@
 
 **Applied Search Intelligence: Google Search Ranking & Discoverability**
 
+The public portfolio includes a compact Mina AI chat. It uses the private Oracle LLM only through a server-side, rate-limited bridge when configured; credentials never enter the browser. If the bridge is unavailable, the assistant answers from a small public-safe fallback.
+
 This is the starting point for the FlyRank ML Internship. You **clone it into your own public
 repo** (one click — *Use this template*), build everything there, and submit that repo URL on
 each assignment in your portal — it's your workspace, your submission, and your portfolio all
