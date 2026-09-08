@@ -319,7 +319,7 @@
       if (q.includes('limit') || q.includes('risk') || q.includes('privacy')) return 'The live scorer is deliberately small: it runs in the browser, uses aggregate inputs, and does not recover missing evidence. It is a review aid, not a truth detector, ranking guarantee, or automatic publisher.';
       if (q.includes('capstone') || q.includes('measure') || q.includes('score')) return 'The capstone compares a transparent baseline with a regularized score for search discoverability review. It uses public-safe aggregate signals and frames the result as directional prioritization, not proof that an edit will work.';
       if (q.includes('editor') || q.includes('tool') || q.includes('draft')) return 'The Portfolio Evidence Editor turns rough notes into a structured case with context, role, approach, evidence, limitation, and next step. It flags numbers and risky absolute language, then leaves publication behind human fact-checking.';
-      if (q.includes('mina') || q.includes('work') || q.includes('skill')) return 'Mina builds inspectable AI and machine-learning tools, combining reproducible analysis with plain-language decisions. Her approach keeps uncertainty visible and people responsible for consequential choices.';
+      if (q.includes('mina') || q.includes('work') || q.includes('skill')) return 'Mina builds inspectable AI and machine-learning tools, combining reproducible analysis with plain-language decisions. The approach keeps uncertainty visible and people responsible for consequential choices.';
       return 'Ask about the capstone, the evidence editor, the live scorer, or the limits and privacy boundary.';
     }
     const bridgeUrl = document.querySelector('meta[name="mina-ai-bridge"]')?.content || '';
@@ -332,7 +332,7 @@
         try { target = String((await fetch('assistant-bridge.json', { cache: 'no-store' }).then((response) => response.ok ? response.json() : {})).url || ''); } catch (_) { target = ''; }
       }
       if (!target) return '';
-      const result = await withTimeout(fetch(target, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question, history: recent, site: 'flyrank' }) }), 6500);
+      const result = await fetch(target, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question, history: recent.slice(0, -2), site: 'flyrank' }), signal: AbortSignal.timeout(60000) });
       if (!result.ok) return '';
       const payload = await result.json();
       return String(payload.answer || '').trim();
@@ -354,7 +354,7 @@
       const answer = addAssistantMessage('Reviewing the public evidence…', 'assistant');
       const recent = Array.from(assistantTranscript.querySelectorAll('.assistant-message')).slice(-7).map((element) => ({ role: element.classList.contains('user') ? 'user' : 'assistant', content: element.textContent }));
       requestOracle(question, recent).catch(() => '').then((oracleAnswer) => {
-        answer.textContent = oracleAnswer || assistantReply(question);
+        answer.textContent = oracleAnswer || ('The live assistant is temporarily unavailable. ' + assistantReply(question));
         assistantInput.disabled = false;
         assistantInput.focus();
       });
