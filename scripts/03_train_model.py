@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 from pathlib import Path
 
 import numpy as np
@@ -29,6 +30,7 @@ from ml_utils import (
     precision_at_k,
     write_json,
 )
+from validation_style import build_run_provenance
 
 
 FEATURE_PATH = PROCESSED_DIR / "refresh_feature_vector.csv"
@@ -36,6 +38,29 @@ BASELINE_PATH = PROCESSED_DIR / "baseline_refresh_queue.csv"
 PREDICTION_PATH = PROCESSED_DIR / "model_predictions.csv"
 RESULT_PATH = OUTPUT_DIR / "model_results.json"
 RANDOM_STATE = 42
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def code_bundle_sha256() -> str:
+    digest = hashlib.sha256()
+    code_paths = [
+        Path(__file__),
+        Path(__file__).with_name("04_evaluate_and_export.py"),
+        Path(__file__).with_name("05_build_pdf_report.py"),
+        Path(__file__).with_name("validation_style.py"),
+    ]
+    for path in sorted(code_paths, key=lambda item: item.name):
+        digest.update(path.name.encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(bytes.fromhex(sha256_file(path)))
+    return digest.hexdigest()
 
 
 def parse_args() -> argparse.Namespace:
@@ -273,6 +298,13 @@ def main() -> None:
         "train_rows": int(len(train_indices)),
         "test_rows": int(len(test_indices)),
         "split_strategy": split_strategy,
+        "run_provenance": build_run_provenance(
+            feature_data_sha256=sha256_file(Path(args.features)),
+            baseline_data_sha256=sha256_file(Path(args.baseline)),
+            code_bundle_sha256=code_bundle_sha256(),
+            random_seed=RANDOM_STATE,
+            split_strategy=split_strategy,
+        ),
         "target": "is_declining_label",
         "target_positive_rows": int(target_series.sum()),
         "target_positive_rate": float(target_series.mean()),

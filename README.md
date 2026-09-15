@@ -70,15 +70,20 @@ That runs the whole pipeline on the bundled sample and writes results to `output
 ```text
 01_prepare_features.py   clean + build the feature vector, define the label
 02_baseline_score.py     a transparent hand-rule "fix this first" score
-03_train_model.py        logistic regression, decision tree, random forest (client-holdout split)
+03_train_model.py        logistic regression, decision tree, random forest (client holdout with a row-split fallback)
 04_evaluate_and_export.py  ranked queue + charts + Markdown report
 05_build_pdf_report.py   a shareable PDF summary
 ```
 
-On the bundled sample, the learned model clearly beats the hand-written rule at picking the right
-pages to review first (**Precision@50 ≈ 0.24 → 0.74**; the model number can land 0.68–0.74
-depending on library versions — the ~3x lift is the point). The notebooks compute these numbers
-live, so they always reflect the current data and environment.
+Earlier static Precision@50 comparisons have been withdrawn because their saved artifacts do not
+carry a verifiable dataset, split, seed, and code-run lineage. A fresh run records SHA-256
+fingerprints for the feature data, baseline data, and reporting code together with the random seed
+and split strategy. The evaluation and PDF steps stop unless that provenance is complete and
+internally consistent. Review the dataset scope and run before sharing generated metrics.
+
+Training uses a client-level holdout when both label classes are present in both groups. If the grouped
+split cannot meet that condition, it falls back to a stratified row split; that fallback does not test
+generalization to unseen clients, and the generated report labels it explicitly.
 
 **Teaching point:** the model is the capstone, but the *workflow* is the lesson —
 `problem framing → data cleaning → baseline → first model → evaluation → explainable recommendation`.

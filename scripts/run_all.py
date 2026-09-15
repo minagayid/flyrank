@@ -10,7 +10,7 @@ from ml_utils import OUTPUT_DIR, RAW_PATH, ROOT, read_json
 STEPS = [
     ("01_prepare_features.py", "Prepare features — clean the data, build the feature vector, define the label"),
     ("02_baseline_score.py", "Baseline — a transparent hand-written rule to beat"),
-    ("03_train_model.py", "Train — logistic regression, decision tree, random forest (client-holdout split)"),
+    ("03_train_model.py", "Train — client holdout when feasible, stratified row fallback otherwise"),
     ("04_evaluate_and_export.py", "Evaluate — ranked refresh queue, charts, and the Markdown report"),
     ("05_build_pdf_report.py", "Report — a shareable PDF summary"),
 ]

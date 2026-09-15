@@ -25,9 +25,9 @@ To run locally, download `agent/index.html` and open it in a browser. The tool h
 ```text
 Problem: Content teams cannot inspect every page.
 Role: I designed a public-safe review queue and documented the decision boundary.
-Method: I compared a transparent rule with a regularized score on the same held-out slice.
-Evidence: Precision at 10 was 0.60 for the rule and 0.80 for the comparison score.
-Limitation: This is directional decision support, not causal evidence.
+Method: I designed a transparent rule and a regularized-score comparison for a human review queue.
+Evidence: No reproducible comparison is claimed. The earlier precision-at-10 figures lack linked dataset, split, seed, and run provenance and have been withdrawn.
+Limitation: This is a proposed decision-support workflow, not causal evidence.
 Next step: A reviewer checks intent and SERP context before any content change.
 ```
 

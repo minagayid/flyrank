@@ -40,7 +40,7 @@ data/processed/refresh_feature_vector.csv      (52 columns)
       ▼
 data/processed/baseline_refresh_queue.csv
       │
-      │  03_train_model.py         3 models, client-holdout split, metrics vs the baseline
+      │  03_train_model.py         3 models, client holdout when feasible (row fallback otherwise)
       ▼
 data/processed/model_predictions.csv  +  outputs/model_results.json
       │
@@ -59,8 +59,11 @@ outputs/flyrank_refresh_model_results.pdf
 derived from `trend_direction`, neither `trend_direction` nor `trend_pct` may ever be a
 model feature — notebook 02 shows you exactly what happens if you leak them in.
 
-**The split:** `03_train_model.py` holds out ~20% of *clients* (not rows), so no client's
-pages appear in both train and test. When you evaluate your own models, use the same idea.
+**The split:** `03_train_model.py` tries to hold out ~20% of *clients* (not rows), and uses that
+split only when both label classes appear in train and test. Otherwise it uses a stratified row split;
+that fallback can place one client's pages in both groups and does not test new-client generalization.
+The report records which strategy was used. When you evaluate your own models, match the split to the
+deployment question and state any fallback clearly.
 
 ## 3. Committed vs regenerated
 
