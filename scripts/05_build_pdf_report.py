@@ -20,6 +20,7 @@ from reportlab.platypus import (
     Table,
     TableStyle,
 )
+from validation_style import require_metric_provenance, validation_style
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -400,8 +401,9 @@ def footer(canvas, doc) -> None:
 
 
 def build_pdf() -> None:
-    summary = load_json(SUMMARY_PATH)
     results = load_json(MODEL_RESULTS_PATH)
+    require_metric_provenance(results)
+    summary = load_json(SUMMARY_PATH)
     queue_rows = load_queue_rows(QUEUE_PATH)
     styles = make_styles()
 
@@ -410,6 +412,7 @@ def build_pdf() -> None:
     reason_counter = reason_counts(queue_rows)
     best_model = summary["best_model"]
     best_metrics = results["models"][best_model]
+    validation_label, validation_description = validation_style(results)
 
     document = SimpleDocTemplate(
         str(PDF_PATH),
@@ -434,7 +437,7 @@ def build_pdf() -> None:
                 (format_int(summary["high_confidence_rows"]), "High confidence", "Rows ready for manual review"),
                 (pct_metric(summary["target_positive_rate"]), "Declining-label rate", "Supervised target balance"),
                 (format_score(summary["top_queue_score"]), "Top queue score", "0–100 final priority score"),
-                ("client holdout", "Validation style", "Uses anonymized client split"),
+                (validation_label, "Validation style", validation_description),
             ],
             styles,
         ),

@@ -56,9 +56,9 @@
     const audience = document.querySelector('#audience');
     const safeSample = `Problem: Content teams cannot inspect every page.
 Role: I designed a public-safe review queue and documented the decision boundary.
-Method: I compared an impressions × (1 − CTR) baseline with a regularized score on the same held-out slice.
-Evidence: Precision at 10 was 0.60 for the rule and 0.80 for the comparison score.
-Limitation: This is directional decision support, not evidence that an edit causes higher rankings.
+Method: I designed an impressions × (1 − CTR) baseline and a regularized-score comparison for human review.
+Evidence: No reproducible score comparison is currently claimed. The earlier precision-at-10 figures lack linked dataset, split, seed, and run provenance and have been withdrawn.
+Limitation: This is a proposed decision-support workflow, not evidence that an edit causes higher rankings.
 Next step: A reviewer checks query intent and SERP context before any content change.`;
 
     function sentence(label, fallback) {
@@ -108,7 +108,7 @@ Status: ${risks.length ? 'REVISE BEFORE PUBLISHING' : 'READY FOR HUMAN FACT-CHEC
       speechSynthesis.cancel();
       const script = [
         'This is a live demonstration of the Portfolio Evidence Editor. The tool is designed for a job seeker who has rough project notes and needs a truthful case study draft.',
-        'I will load a public-safe sample from the FlyRank search discoverability capstone. Notice that it contains a problem, a specific role, the method, two measured precision values, an honest limitation, and a next step.',
+        'I will load a public-safe sample from the FlyRank search discoverability capstone. It contains a problem, a specific role, the method, a clear statement that no reproducible score comparison is currently claimed, an honest limitation, and a next step.',
         'The notes stay in this browser. There is no backend and no external model call. That is a deliberate privacy boundary: the tool can structure what it receives, but it cannot recover missing evidence.',
         'Now the editor builds a five-part case. It separates context, role, approach, evidence, limitation, and next action so a reviewer can inspect each claim.',
         'The claim audit extracts numeric tokens and searches for absolute language such as guaranteed, perfect, or caused. This is a guardrail, not a truth detector. A sentence can still be wrong even when no risky word appears.',

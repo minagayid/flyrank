@@ -15,6 +15,7 @@ from ml_utils import (
     simple_svg_bar_chart,
     write_json,
 )
+from validation_style import require_metric_provenance
 
 
 FEATURE_PATH = PROCESSED_DIR / "refresh_feature_vector.csv"
@@ -283,10 +284,11 @@ The safest first production use is to inspect high-confidence rows, verify the p
 def main() -> None:
     args = parse_args()
 
+    model_results = read_json(Path(args.model_results))
+    require_metric_provenance(model_results)
     feature_frame = pd.read_csv(args.features)
     baseline_frame = pd.read_csv(args.baseline)
     prediction_frame = pd.read_csv(args.predictions)
-    model_results = read_json(Path(args.model_results))
 
     final_frame = baseline_frame.merge(
         prediction_frame[
