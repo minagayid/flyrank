@@ -126,5 +126,11 @@ Rules covered private-key markers, common AWS/GitHub/Slack/Stripe/Google credent
 
 - No paid service, real payment, Stripe account, Stripe CLI, or real Stripe test checkout.
 - No `.env` file was read; `.env`-style files were excluded before content scanning.
-- No deployment, separate public GitHub repository creation, or FlyRank portal submission.
+- At the time of these local runtime probes, the separate public repository and FlyRank portal submission had not yet occurred. Their current verified state is recorded below.
 - No claim of production security, production reliability, human-authored code, or mentor acceptance.
+
+## Packaging status — 2026-09-26
+
+- Public repository: https://github.com/minagayid/flyrank-capstone-usage-metering, default branch `main`, commit `7e07e0dfc603828b981b1b72109add09895c35f0`.
+- FlyRank capstone record: `Submitted` / waiting for review. The portal notes disclose that Stripe test Checkout and CLI delivery were not run.
+- The repository was created after local implementation; this does not satisfy the brief's public-from-day-one sequence. Submission is not mentor acceptance.

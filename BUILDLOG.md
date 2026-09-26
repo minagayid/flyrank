@@ -20,3 +20,4 @@
 ## Packaging checkpoint
 
 - The user authorized a dedicated public GitHub repository and FlyRank submission. The project was implemented locally before repository creation, so the brief's public-from-day-one and staged-commit sequence was not met. The repository history will not be represented as if it did.
+- Published at https://github.com/minagayid/flyrank-capstone-usage-metering (commit `7e07e0dfc603828b981b1b72109add09895c35f0`). FlyRank shows `Submitted`, waiting for review; the mentor's decision is not yet known.

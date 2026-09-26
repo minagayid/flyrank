@@ -91,7 +91,7 @@ An optional `PAYMENT_MODE=stripe_test` path uses the Stripe Python SDK and requi
 
 ## Limitations
 
-This is a single-process educational service. SQLite is durable local persistence, but the in-process worker is not horizontally scalable. Demo API keys are public sample credentials. The mock signature is not a substitute for Stripe's SDK verification; only `stripe_test` uses the SDK's verifier. The Stripe test-mode path requires user-provided test credentials and a locally configured webhook secret and has not been run. Cost rates are synthetic pinned examples, invoice summaries are estimates, and no real invoice is issued or payment collected. The required separate public repository and portal submission remain unfulfilled because this build was intentionally kept local.
+This is a single-process educational service. SQLite is durable local persistence, but the in-process worker is not horizontally scalable. Demo API keys are public sample credentials. The mock signature is not a substitute for Stripe's SDK verification; only `stripe_test` uses the SDK's verifier. The Stripe test-mode path requires user-provided test credentials and a locally configured webhook secret and has not been run. Cost rates are synthetic pinned examples, invoice summaries are estimates, and no real invoice is issued or payment collected. The project was implemented locally before its separate public repository existed; it does not meet the brief's public-from-day-one sequence.
 
 ## Design and evidence
 
