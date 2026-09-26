@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VisionOutput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["subject", "category", "attributes", "caption", "confidence"],
+  "properties": {
+    "subject": {"type": "string", "minLength": 1, "maxLength": 120},
+    "category": {"type": "string", "enum": ["animal", "food", "plant", "landmark"]},
+    "attributes": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {"type": "string", "minLength": 1, "maxLength": 80}
+    },
+    "caption": {"type": "string", "minLength": 1, "maxLength": 240},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+  }
+}
