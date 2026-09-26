@@ -15,6 +15,7 @@
 - The implementation was built locally before its dedicated public repository was created. This does not meet the brief's “public from day one” workflow or staged-commit history expectation; the repository history will not be represented as if it did.
 - The user authorized public GitHub publication and FlyRank submission. The exact overview filename uses the FlyRank profile name, `Mina Maged Zekry Gayid`.
 - The acceptance probe uses a fake loopback Ollama-compatible server, not an actual model. The 10x improvement remains an unmeasured target.
+- Published at https://github.com/minagayid/flyrank-capstone-10x-solution (commit `81937334cf25ba672bf70a31f39002a7fb62e57c`). FlyRank shows `Submitted`, waiting for review; the mentor's decision is not yet known. The overview was linked directly from the portal.
 
 ## Learner ownership checkpoint
 
