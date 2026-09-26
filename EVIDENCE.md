@@ -64,4 +64,10 @@ The current run also demonstrates missing-token `401`, cross-tenant widget `404`
 
 The existing probe does not simulate a lost browser response/retry or assert the new pre-parse IP gate directly. The browser idempotency-key retention and non-loopback startup guard were reviewed in code but not dynamically exercised. Geo fallback used only deterministic local mocks; no visitor IP was sent externally.
 
-This build is local in the requested workspace folder. The brief requires a dedicated public GitHub repository and public commit history; neither was created because the task explicitly prohibited publishing or submitting. Do not describe this local folder as a public repository or mark the portal submission complete.
+At the end of the local acceptance run, the project had not yet been published or submitted. The user later authorized publication and portal submission; the verified current packaging state is recorded below. The project was implemented locally before its public repository existed, so it does not meet the brief's public-from-day-one sequence.
+
+## Packaging status — 2026-09-26
+
+- Public repository: https://github.com/minagayid/flyrank-capstone-lead-capture, default branch `main`, commit `14f9fd2275402af0eafc6e9a2bed41c7cee43495`.
+- FlyRank capstone record: `Submitted` / waiting for review. The portal notes disclose simulated email and geo, no deployment, and the repository timing.
+- This is submission evidence, not a claim of mentor acceptance or deployed behavior.

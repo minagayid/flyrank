@@ -14,7 +14,7 @@
 - `python scripts/acceptance_probe.py` returned `acceptance_probes: PASS`. It exercised owner CRUD and tenant isolation, snippet/config/bundle caching, CORS preflight and submission, idempotent replay, malformed/oversized payloads, rate-limit and recovery, honeypot suppression, both geo fallback cases, worker retries, owner stats, and required pack files. Exact observed results are in EVIDENCE.md.
 - Chrome opened the actual customer page on port 4173 while the API ran on port 8000. The fetched widget rendered labeled inputs, accepted a synthetic test lead, and announced success; a separate SQLite query confirmed the row was stored.
 - The worker emitted two retry messages and an `ALERT` after the configured three attempts while the submission response stayed 201 and the lead remained stored.
-- No deployment, public GitHub repository, or portal submission was made; the parent task explicitly prohibited those actions. The capstone brief's dedicated-public-repository rule remains a submission prerequisite.
+- At the end of the local build checkpoint, no deployment, public GitHub repository, or portal submission had been made because the then-active task prohibited them. The later user authorization and verified package status are recorded below.
 
 ## 2026-09-26 — reviewer fixes
 
@@ -27,3 +27,4 @@
 ## Packaging checkpoint
 
 - The user authorized a dedicated public GitHub repository and FlyRank submission. The project was built locally before repository creation, so the brief's public-from-day-one and staged-commit sequence was not met. The existing AI-use, corrections, evidence, and unverified checks remain disclosed above.
+- Published at https://github.com/minagayid/flyrank-capstone-lead-capture (commit `14f9fd2275402af0eafc6e9a2bed41c7cee43495`). FlyRank shows `Submitted`, waiting for review; the mentor's decision is not yet known.
