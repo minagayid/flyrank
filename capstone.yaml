@@ -1,0 +1,15 @@
+name: flyrank-capstone-widget-platform
+run: python -m lead_capture.app
+seed: python -m lead_capture.seed
+base_url: http://127.0.0.1:8000
+endpoints:
+  - GET /health
+  - GET /widget.v1.js?widget_id=widget_demo_signup
+  - GET /api/public/widgets/widget_demo_signup/config
+  - POST /api/public/submissions
+  - GET /api/widgets
+  - POST /api/widgets
+  - GET /api/widgets/{id}/embed
+  - GET /api/widgets/{id}/submissions
+  - GET /api/dashboard/summary
+  - GET /api/dashboard/jobs
