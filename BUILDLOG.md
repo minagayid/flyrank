@@ -1,4 +1,9 @@
 # Build log
 
 - **2026-09-26:** The learner selected Discord as the intended real adapter. AI (Codex) helped inspect the capstone brief, design the schema/API, and draft the initial repository documentation. No Discord credentials were provided or read. No real post has been sent.
-- Later entries will record implementation changes, AI mistakes corrected, required probes, and remaining live-platform limitations.
+- **2026-09-26:** AI drafted the FastAPI/SQLite service, browser review page, template variants, platform constraints, publisher interface, durable polling worker, and mock adapters. The implementation records that Discord cannot promise exactly-once delivery after an ambiguous timeout; those sends are held for manual reconciliation. Acceptance probes are being run against the local mock adapter.
+- The first acceptance-probe run exposed an assertion mistake in the probe itself: the API serializes the empty validation list as JSON text (`"[]"`). The probe now parses that field before checking it. This was not an application failure.
+- The first restart-probe invocation could not import the app when run from `scripts/`; the probe now adds the project root to Python's module search path. No application files were changed by that failure.
+- The first restart-probe pass reached all assertions but Windows could not remove its temporary database because the app's database context helper did not close SQLite connections. The helper now closes each connection; the probe will be rerun to confirm clean shutdown.
+- The project was not connected to a live Discord webhook, so a live channel publish and returned message URL remain unverified. The README discloses this limit.
+- The completed local acceptance probes verified Markdown ingestion, generated variants, named length/tone failures, review gates, scheduling, repeated-call idempotency, publish history, restart recovery for both sides of a mock side effect, and config-only mock adapter switching. Docker Compose could not be started because Docker Desktop's Linux engine is unavailable. No live Discord message was sent.

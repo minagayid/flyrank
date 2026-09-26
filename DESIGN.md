@@ -16,6 +16,8 @@ Markdown or URL -> stored post -> variants -> constraints -> human review
 - `schedules`: variant, UTC slot, adapter, status, unique idempotency key.
 - `publish_attempts`: schedule, start/end, outcome, message reference, safe error summary.
 
+Platform profiles enforce length and hashtag limits plus a simple tone rule: Discord copy invites a reply, X-style copy stays within two sentences, and LinkedIn-style copy avoids all-caps words and repeated punctuation. These rules are intentionally deterministic and easy to explain.
+
 ## API surface
 
 - `POST /posts`: store Markdown or fetch a public HTTP(S) URL.
