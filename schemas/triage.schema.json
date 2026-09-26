@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["fit_score", "urgency", "evidence", "cautions", "next_question", "summary"],
+  "properties": {
+    "fit_score": {"type": "integer", "minimum": 0, "maximum": 100},
+    "urgency": {"type": "string", "enum": ["low", "normal", "high"]},
+    "evidence": {"type": "array", "maxItems": 3, "items": {"type": "string", "minLength": 1, "maxLength": 120}},
+    "cautions": {"type": "array", "maxItems": 3, "items": {"type": "string", "minLength": 1, "maxLength": 200}},
+    "next_question": {"type": "string", "minLength": 1, "maxLength": 240},
+    "summary": {"type": "string", "minLength": 1, "maxLength": 320}
+  }
+}

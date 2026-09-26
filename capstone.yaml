@@ -1,0 +1,15 @@
+run: python -m signal_desk
+seed: python -m signal_desk.seed
+test: python scripts/acceptance_probe.py
+base_url: http://127.0.0.1:8080
+endpoints:
+  - GET /health
+  - POST /auth/login
+  - GET /auth/me
+  - POST /auth/logout
+  - GET /leads
+  - POST /leads
+  - GET /leads/{id}
+  - POST /leads/{id}/triage
+  - GET /jobs/{id}
+  - GET /reports/daily.pdf
