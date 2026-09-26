@@ -1,0 +1,16 @@
+run: uv run python -m app
+seed: uv run python -m app.seed
+base_url: http://127.0.0.1:8000
+endpoints:
+  - GET /health
+  - GET /plans
+  - POST /generate
+  - POST /usage/events
+  - GET /usage
+  - GET /invoices/preview
+  - POST /invoice-jobs
+  - GET /invoice-jobs/{job_id}
+  - POST /billing/checkout
+  - GET /billing/success
+  - GET /billing/cancel
+  - POST /webhooks/stripe
