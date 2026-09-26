@@ -7,3 +7,8 @@
 - The first restart-probe pass reached all assertions but Windows could not remove its temporary database because the app's database context helper did not close SQLite connections. The helper now closes each connection; the probe will be rerun to confirm clean shutdown.
 - The project was not connected to a live Discord webhook, so a live channel publish and returned message URL remain unverified. The README discloses this limit.
 - The completed local acceptance probes verified Markdown ingestion, generated variants, named length/tone failures, review gates, scheduling, repeated-call idempotency, publish history, restart recovery for both sides of a mock side effect, and config-only mock adapter switching. Docker Compose could not be started because Docker Desktop's Linux engine is unavailable. No live Discord message was sent.
+
+## Packaging checkpoint
+
+- The local implementation preceded creation of the dedicated public repository, so the brief's public-from-day-one sequence and staged-commit history expectation were not met. The submitted repository and portal note disclose the missing Discord webhook and live post. No message was sent.
+- Public repository: https://github.com/minagayid/flyrank-capstone-social-studio. The current FlyRank record shows `Approved`; this is a portal review state, not evidence of a live Discord post. The public repository was created after local implementation.
