@@ -94,5 +94,11 @@ Ollama's local `/api/tags` response listed `nomic-embed-text:latest` at 274,302,
 
 - The 48 corpus entries are metadata fixtures with `mock://` references, not 48 real licensed images. The vision pipeline validates fixture JSON; it does not send image pixels to a vision model.
 - The Ollama result measures embeddings of synthetic captions and post text, not visual understanding or out-of-sample accuracy. The 12/12 score is limited to these curated pairs.
-- The public dedicated GitHub repository and public commit history required by the brief have not been created. Nothing has been published or submitted.
+- The project was implemented locally before publication, so the brief's public-from-day-one sequence was not met. The verified repository and portal state are recorded below.
 - The service remains a loopback demo. `X-Tenant-ID` is not authentication, and there is no public deployment or production URL smoke test.
+
+## Packaging status — 2026-09-26
+
+- Public repository: https://github.com/minagayid/flyrank-capstone-image-relevance, default branch `main`, commit `c69a95a8bee308e4634f37150f2a7d562033189f`.
+- FlyRank capstone record: `Submitted` / waiting for review. The portal notes disclose fixture-based vision metadata and the synthetic evaluation set.
+- Submission does not claim mentor acceptance or deployed behavior.

@@ -30,8 +30,9 @@ The source has not been published to a public GitHub repository, no live URL exi
 - Changed the fox/wolf refusal text to identify the animal-category subtype mismatch while retaining both subject names.
 - Added an opt-in loopback-only Ollama embedding adapter for `nomic-embed-text`. The deterministic hash embedder remains the offline default and the acceptance suite explicitly selects it.
 - On the locally installed Ollama model, the synthetic 48-image/13-post corpus completed 61 embedding requests, with 61/61 job items complete, zero failed items, and observed guarded top-1 precision of 12/12. This result measures text embeddings over synthetic fixture tags/captions; the vision source is still a fixture, not image analysis.
-- Captured assertion-backed acceptance output in EVIDENCE.md. No cloud provider, `.env` file, publication, or portal submission was used.
+- Captured assertion-backed acceptance output in EVIDENCE.md. No cloud provider or `.env` file was used for implementation or verification. Later repository publication and portal submission are recorded below.
 
 ## Packaging checkpoint
 
 - The user authorized a dedicated public GitHub repository and FlyRank submission. The project was built locally before repository creation, so the brief's public-from-day-one and staged-commit sequence was not met. Existing disclosures remain: image tags are fixtures, the corpus is synthetic, and the local embedding evaluation does not prove image analysis or general retrieval quality.
+- Published at https://github.com/minagayid/flyrank-capstone-image-relevance (commit `c69a95a8bee308e4634f37150f2a7d562033189f`). FlyRank shows `Submitted`, waiting for review; the mentor's decision is not yet known.
