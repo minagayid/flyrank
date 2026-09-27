@@ -1,6 +1,6 @@
 # Consolidated FlyRank projects
 
-The FlyRank internship starter remains at the repository root. These six projects are kept in separate folders under `projects/`; each folder retains its source README and Git history.
+The FlyRank internship starter remains at the repository root. These seven projects are kept in separate folders under `projects/`; each folder retains its source README and Git history.
 
 | Project | Folder | Original repository |
 | --- | --- | --- |
@@ -10,3 +10,6 @@ The FlyRank internship starter remains at the repository root. These six project
 | Lead Capture | [projects/flyrank-capstone-lead-capture](projects/flyrank-capstone-lead-capture/README.md) | [flyrank-capstone-lead-capture](https://github.com/minagayid/flyrank-capstone-lead-capture) |
 | Social Studio | [projects/flyrank-capstone-social-studio](projects/flyrank-capstone-social-studio/README.md) | [flyrank-capstone-social-studio](https://github.com/minagayid/flyrank-capstone-social-studio) |
 | Usage Metering | [projects/flyrank-capstone-usage-metering](projects/flyrank-capstone-usage-metering/README.md) | [flyrank-capstone-usage-metering](https://github.com/minagayid/flyrank-capstone-usage-metering) |
+| Signal Desk Lead Triage | [projects/signal-desk-ai-lead-triage](projects/signal-desk-ai-lead-triage/README.md) | [signal-desk-ai-lead-triage](https://github.com/minagayid/signal-desk-ai-lead-triage) |
+
+Signal Desk's nested `.github/workflows/ci.yml` is preserved with the project, but GitHub Actions only runs workflows from the repository-root `.github/workflows/` directory.
