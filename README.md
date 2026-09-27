@@ -124,4 +124,4 @@ build on — and the `skills/` folder here is the instruction library for your A
 
 ## Consolidated projects
 
-The related FlyRank capstones are grouped under [`projects/`](projects/). See the [project index](CONSOLIDATED_PROJECTS.md) for links and source repositories.
+The related FlyRank capstones are grouped under [`projects/`](projects/). See the [project index](CONSOLIDATED_PROJECTS.md) for project locations and preserved histories.
