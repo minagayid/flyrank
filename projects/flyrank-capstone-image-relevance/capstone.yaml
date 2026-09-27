@@ -1,0 +1,19 @@
+name: flyrank-capstone-image-relevance
+language: Python
+python: ">=3.11"
+run: python -m image_relevance.api
+seed: python -m image_relevance.seed
+test: python -m unittest discover -s tests -v
+base_url: http://127.0.0.1:8000
+endpoints:
+  health: GET /health
+  batch_create: POST /jobs
+  batch_status: GET /jobs/{job_id}
+  costs: GET /costs
+  images: GET /images
+  posts: GET /posts
+  recommendations: GET /posts/{post_id}/images
+  forced_candidate: GET /posts/{post_id}/images?candidate_id={image_id}
+  suggestion_create: POST /posts/{post_id}/suggestions
+  suggestion_detail: GET /suggestions/{suggestion_id}
+  review: POST /suggestions/{suggestion_id}/review

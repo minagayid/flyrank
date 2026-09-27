@@ -1,0 +1,805 @@
+{
+  "schema_version": 1,
+  "provider": "mock-vision-v1",
+  "images": [
+    {
+      "image_id": "img-red-fox-01",
+      "reference": "mock://flyrank-demo/img-red-fox-01.jpg",
+      "vision_output": {
+        "subject": "red fox",
+        "category": "animal",
+        "attributes": [
+          "amber coat",
+          "pine woodland",
+          "dawn light"
+        ],
+        "caption": "A red fox showing amber coat and pine woodland and dawn light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-red-fox-02",
+      "reference": "mock://flyrank-demo/img-red-fox-02.jpg",
+      "vision_output": {
+        "subject": "red fox",
+        "category": "animal",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A red fox showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-red-fox-03",
+      "reference": "mock://flyrank-demo/img-red-fox-03.jpg",
+      "vision_output": {
+        "subject": "red fox",
+        "category": "animal",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A red fox showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-red-fox-04",
+      "reference": "mock://flyrank-demo/img-red-fox-04.jpg",
+      "vision_output": {
+        "subject": "red fox",
+        "category": "animal",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A red fox showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 1
+    },
+    {
+      "image_id": "img-gray-wolf-01",
+      "reference": "mock://flyrank-demo/img-gray-wolf-01.jpg",
+      "vision_output": {
+        "subject": "gray wolf",
+        "category": "animal",
+        "attributes": [
+          "moonlit pack",
+          "alpine tundra",
+          "winter trail"
+        ],
+        "caption": "A gray wolf showing moonlit pack and alpine tundra and winter trail",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-gray-wolf-02",
+      "reference": "mock://flyrank-demo/img-gray-wolf-02.jpg",
+      "vision_output": {
+        "subject": "gray wolf",
+        "category": "animal",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A gray wolf showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-gray-wolf-03",
+      "reference": "mock://flyrank-demo/img-gray-wolf-03.jpg",
+      "vision_output": {
+        "subject": "gray wolf",
+        "category": "animal",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A gray wolf showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-gray-wolf-04",
+      "reference": "mock://flyrank-demo/img-gray-wolf-04.jpg",
+      "vision_output": {
+        "subject": "gray wolf",
+        "category": "animal",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A gray wolf showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-domestic-dog-01",
+      "reference": "mock://flyrank-demo/img-domestic-dog-01.jpg",
+      "vision_output": {
+        "subject": "domestic dog",
+        "category": "animal",
+        "attributes": [
+          "service vest",
+          "school hallway",
+          "guide training"
+        ],
+        "caption": "A domestic dog showing service vest and school hallway and guide training",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-domestic-dog-02",
+      "reference": "mock://flyrank-demo/img-domestic-dog-02.jpg",
+      "vision_output": {
+        "subject": "domestic dog",
+        "category": "animal",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A domestic dog showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-domestic-dog-03",
+      "reference": "mock://flyrank-demo/img-domestic-dog-03.jpg",
+      "vision_output": {
+        "subject": "domestic dog",
+        "category": "animal",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A domestic dog showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-domestic-dog-04",
+      "reference": "mock://flyrank-demo/img-domestic-dog-04.jpg",
+      "vision_output": {
+        "subject": "domestic dog",
+        "category": "animal",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A domestic dog showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-bear-01",
+      "reference": "mock://flyrank-demo/img-bear-01.jpg",
+      "vision_output": {
+        "subject": "bear",
+        "category": "animal",
+        "attributes": [
+          "salmon river",
+          "mossy rocks",
+          "autumn valley"
+        ],
+        "caption": "A bear showing salmon river and mossy rocks and autumn valley",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-bear-02",
+      "reference": "mock://flyrank-demo/img-bear-02.jpg",
+      "vision_output": {
+        "subject": "bear",
+        "category": "animal",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A bear showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-bear-03",
+      "reference": "mock://flyrank-demo/img-bear-03.jpg",
+      "vision_output": {
+        "subject": "bear",
+        "category": "animal",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A bear showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-bear-04",
+      "reference": "mock://flyrank-demo/img-bear-04.jpg",
+      "vision_output": {
+        "subject": "bear",
+        "category": "animal",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A bear showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-deer-01",
+      "reference": "mock://flyrank-demo/img-deer-01.jpg",
+      "vision_output": {
+        "subject": "deer",
+        "category": "animal",
+        "attributes": [
+          "fern clearing",
+          "morning mist",
+          "woodland path"
+        ],
+        "caption": "A deer showing fern clearing and morning mist and woodland path",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-deer-02",
+      "reference": "mock://flyrank-demo/img-deer-02.jpg",
+      "vision_output": {
+        "subject": "deer",
+        "category": "animal",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A deer showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-deer-03",
+      "reference": "mock://flyrank-demo/img-deer-03.jpg",
+      "vision_output": {
+        "subject": "deer",
+        "category": "animal",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A deer showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-deer-04",
+      "reference": "mock://flyrank-demo/img-deer-04.jpg",
+      "vision_output": {
+        "subject": "deer",
+        "category": "animal",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A deer showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-barn-owl-01",
+      "reference": "mock://flyrank-demo/img-barn-owl-01.jpg",
+      "vision_output": {
+        "subject": "barn owl",
+        "category": "animal",
+        "attributes": [
+          "dusk flight",
+          "old red barn",
+          "silent meadow"
+        ],
+        "caption": "A barn owl showing dusk flight and old red barn and silent meadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-barn-owl-02",
+      "reference": "mock://flyrank-demo/img-barn-owl-02.jpg",
+      "vision_output": {
+        "subject": "barn owl",
+        "category": "animal",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A barn owl showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-barn-owl-03",
+      "reference": "mock://flyrank-demo/img-barn-owl-03.jpg",
+      "vision_output": {
+        "subject": "barn owl",
+        "category": "animal",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A barn owl showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-barn-owl-04",
+      "reference": "mock://flyrank-demo/img-barn-owl-04.jpg",
+      "vision_output": {
+        "subject": "barn owl",
+        "category": "animal",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A barn owl showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-apple-01",
+      "reference": "mock://flyrank-demo/img-apple-01.jpg",
+      "vision_output": {
+        "subject": "apple",
+        "category": "food",
+        "attributes": [
+          "heirloom orchard",
+          "crisp red skin",
+          "harvest basket"
+        ],
+        "caption": "A apple showing heirloom orchard and crisp red skin and harvest basket",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-apple-02",
+      "reference": "mock://flyrank-demo/img-apple-02.jpg",
+      "vision_output": {
+        "subject": "apple",
+        "category": "food",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A apple showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-apple-03",
+      "reference": "mock://flyrank-demo/img-apple-03.jpg",
+      "vision_output": {
+        "subject": "apple",
+        "category": "food",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A apple showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-apple-04",
+      "reference": "mock://flyrank-demo/img-apple-04.jpg",
+      "vision_output": {
+        "subject": "apple",
+        "category": "food",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A apple showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-strawberry-01",
+      "reference": "mock://flyrank-demo/img-strawberry-01.jpg",
+      "vision_output": {
+        "subject": "strawberry",
+        "category": "food",
+        "attributes": [
+          "summer market",
+          "ripe berry",
+          "garden patch"
+        ],
+        "caption": "A strawberry showing summer market and ripe berry and garden patch",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-strawberry-02",
+      "reference": "mock://flyrank-demo/img-strawberry-02.jpg",
+      "vision_output": {
+        "subject": "strawberry",
+        "category": "food",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A strawberry showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-strawberry-03",
+      "reference": "mock://flyrank-demo/img-strawberry-03.jpg",
+      "vision_output": {
+        "subject": "strawberry",
+        "category": "food",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A strawberry showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-strawberry-04",
+      "reference": "mock://flyrank-demo/img-strawberry-04.jpg",
+      "vision_output": {
+        "subject": "strawberry",
+        "category": "food",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A strawberry showing open meadow and cloudy afternoon",
+        "confidence": 0.48
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-sourdough-bread-01",
+      "reference": "mock://flyrank-demo/img-sourdough-bread-01.jpg",
+      "vision_output": {
+        "subject": "sourdough bread",
+        "category": "food",
+        "attributes": [
+          "open crumb",
+          "scored crust",
+          "flour dust"
+        ],
+        "caption": "A sourdough bread showing open crumb and scored crust and flour dust",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-sourdough-bread-02",
+      "reference": "mock://flyrank-demo/img-sourdough-bread-02.jpg",
+      "vision_output": {
+        "subject": "sourdough bread",
+        "category": "food",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A sourdough bread showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-sourdough-bread-03",
+      "reference": "mock://flyrank-demo/img-sourdough-bread-03.jpg",
+      "vision_output": {
+        "subject": "sourdough bread",
+        "category": "food",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A sourdough bread showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-sourdough-bread-04",
+      "reference": "mock://flyrank-demo/img-sourdough-bread-04.jpg",
+      "vision_output": {
+        "subject": "sourdough bread",
+        "category": "food",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A sourdough bread showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-sunflower-01",
+      "reference": "mock://flyrank-demo/img-sunflower-01.jpg",
+      "vision_output": {
+        "subject": "sunflower",
+        "category": "plant",
+        "attributes": [
+          "golden petals",
+          "pollinator garden",
+          "late summer"
+        ],
+        "caption": "A sunflower showing golden petals and pollinator garden and late summer",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-sunflower-02",
+      "reference": "mock://flyrank-demo/img-sunflower-02.jpg",
+      "vision_output": {
+        "subject": "sunflower",
+        "category": "plant",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A sunflower showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-sunflower-03",
+      "reference": "mock://flyrank-demo/img-sunflower-03.jpg",
+      "vision_output": {
+        "subject": "sunflower",
+        "category": "plant",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A sunflower showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-sunflower-04",
+      "reference": "mock://flyrank-demo/img-sunflower-04.jpg",
+      "vision_output": {
+        "subject": "sunflower",
+        "category": "plant",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A sunflower showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-oak-tree-01",
+      "reference": "mock://flyrank-demo/img-oak-tree-01.jpg",
+      "vision_output": {
+        "subject": "oak tree",
+        "category": "plant",
+        "attributes": [
+          "acorn branch",
+          "autumn canopy",
+          "old woodland"
+        ],
+        "caption": "A oak tree showing acorn branch and autumn canopy and old woodland",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-oak-tree-02",
+      "reference": "mock://flyrank-demo/img-oak-tree-02.jpg",
+      "vision_output": {
+        "subject": "oak tree",
+        "category": "plant",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A oak tree showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-oak-tree-03",
+      "reference": "mock://flyrank-demo/img-oak-tree-03.jpg",
+      "vision_output": {
+        "subject": "oak tree",
+        "category": "plant",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A oak tree showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-oak-tree-04",
+      "reference": "mock://flyrank-demo/img-oak-tree-04.jpg",
+      "vision_output": {
+        "subject": "oak tree",
+        "category": "plant",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A oak tree showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-eiffel-tower-01",
+      "reference": "mock://flyrank-demo/img-eiffel-tower-01.jpg",
+      "vision_output": {
+        "subject": "eiffel tower",
+        "category": "landmark",
+        "attributes": [
+          "iron lattice",
+          "paris skyline",
+          "river view"
+        ],
+        "caption": "A eiffel tower showing iron lattice and paris skyline and river view",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-eiffel-tower-02",
+      "reference": "mock://flyrank-demo/img-eiffel-tower-02.jpg",
+      "vision_output": {
+        "subject": "eiffel tower",
+        "category": "landmark",
+        "attributes": [
+          "snowy ridge",
+          "cool blue light"
+        ],
+        "caption": "A eiffel tower showing snowy ridge and cool blue light",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-eiffel-tower-03",
+      "reference": "mock://flyrank-demo/img-eiffel-tower-03.jpg",
+      "vision_output": {
+        "subject": "eiffel tower",
+        "category": "landmark",
+        "attributes": [
+          "sheltered den",
+          "soft shadow"
+        ],
+        "caption": "A eiffel tower showing sheltered den and soft shadow",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    },
+    {
+      "image_id": "img-eiffel-tower-04",
+      "reference": "mock://flyrank-demo/img-eiffel-tower-04.jpg",
+      "vision_output": {
+        "subject": "eiffel tower",
+        "category": "landmark",
+        "attributes": [
+          "open meadow",
+          "cloudy afternoon"
+        ],
+        "caption": "A eiffel tower showing open meadow and cloudy afternoon",
+        "confidence": 0.94
+      },
+      "invalid_first_attempts": 0
+    }
+  ],
+  "posts": [
+    {
+      "post_id": "post-red-fox",
+      "title": "Vulpes vulpes at dawn",
+      "body": "A field guide to the red fox Vulpes vulpes, its amber coat and pine woodland habitat at dawn."
+    },
+    {
+      "post_id": "post-gray-wolf",
+      "title": "Gray wolves on the alpine trail",
+      "body": "A wildlife article about the gray wolf pack crossing alpine tundra on a moonlit winter trail."
+    },
+    {
+      "post_id": "post-domestic-dog",
+      "title": "Service dogs in schools",
+      "body": "How a trained domestic dog in a service vest supports students in a school hallway during guide training."
+    },
+    {
+      "post_id": "post-bear",
+      "title": "Bears beside salmon rivers",
+      "body": "An animal profile of a bear fishing for salmon beside mossy rocks in an autumn valley."
+    },
+    {
+      "post_id": "post-deer",
+      "title": "Deer in a fern clearing",
+      "body": "A nature story about deer on a woodland path through a fern clearing in the morning mist."
+    },
+    {
+      "post_id": "post-barn-owl",
+      "title": "Barn owl flight at dusk",
+      "body": "A wildlife note on a barn owl making a silent flight past an old red barn above a meadow at dusk."
+    },
+    {
+      "post_id": "post-apple",
+      "title": "Heirloom apples from the orchard",
+      "body": "A food feature about a crisp heirloom apple with red skin picked into a harvest basket in the orchard."
+    },
+    {
+      "post_id": "post-strawberry",
+      "title": "Ripe strawberries in summer",
+      "body": "A recipe story about ripe strawberries gathered from a garden patch for the summer market."
+    },
+    {
+      "post_id": "post-sourdough",
+      "title": "Reading sourdough crumb",
+      "body": "A baking guide to sourdough bread with an open crumb, scored crust, and a dusting of flour."
+    },
+    {
+      "post_id": "post-sunflower",
+      "title": "Sunflowers and pollinators",
+      "body": "A plant profile of a sunflower with golden petals growing in a pollinator garden in late summer."
+    },
+    {
+      "post_id": "post-oak",
+      "title": "Oak trees in autumn",
+      "body": "A botany article about an oak tree with an acorn branch beneath its autumn canopy in old woodland."
+    },
+    {
+      "post_id": "post-eiffel",
+      "title": "The Eiffel Tower and the river",
+      "body": "An architecture feature on the Eiffel Tower's iron lattice, Paris skyline, and river view."
+    },
+    {
+      "post_id": "post-no-match",
+      "title": "Quantum ceramic catalyst notes",
+      "body": "A technical note about a lab catalyst with no image in this corpus."
+    }
+  ]
+}

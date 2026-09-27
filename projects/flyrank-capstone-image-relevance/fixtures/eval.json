@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "description": "Twelve hand-labeled post-to-image pairs over the synthetic demo corpus.",
+  "labels": [
+    {
+      "post_id": "post-red-fox",
+      "correct_image_id": "img-red-fox-01"
+    },
+    {
+      "post_id": "post-gray-wolf",
+      "correct_image_id": "img-gray-wolf-01"
+    },
+    {
+      "post_id": "post-domestic-dog",
+      "correct_image_id": "img-domestic-dog-01"
+    },
+    {
+      "post_id": "post-bear",
+      "correct_image_id": "img-bear-01"
+    },
+    {
+      "post_id": "post-deer",
+      "correct_image_id": "img-deer-01"
+    },
+    {
+      "post_id": "post-barn-owl",
+      "correct_image_id": "img-barn-owl-01"
+    },
+    {
+      "post_id": "post-apple",
+      "correct_image_id": "img-apple-01"
+    },
+    {
+      "post_id": "post-strawberry",
+      "correct_image_id": "img-strawberry-01"
+    },
+    {
+      "post_id": "post-sourdough",
+      "correct_image_id": "img-sourdough-bread-01"
+    },
+    {
+      "post_id": "post-sunflower",
+      "correct_image_id": "img-sunflower-01"
+    },
+    {
+      "post_id": "post-oak",
+      "correct_image_id": "img-oak-tree-01"
+    },
+    {
+      "post_id": "post-eiffel",
+      "correct_image_id": "img-eiffel-tower-01"
+    }
+  ],
+  "probes": {
+    "forced_mismatch": {
+      "post_id": "post-red-fox",
+      "image_id": "img-gray-wolf-01"
+    },
+    "no_match_post": {
+      "post_id": "post-no-match"
+    },
+    "low_confidence_image_id": "img-strawberry-04",
+    "retry_image_id": "img-red-fox-04"
+  }
+}
