@@ -1,0 +1,37 @@
+{
+  "name": "be-09-decision-flow",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -n web,api -c cyan,green \"vite --host 127.0.0.1\" \"tsx watch server/index.ts\"",
+    "build": "tsc --noEmit && vite build",
+    "start:api": "tsx server/index.ts",
+    "dev:inngest": "inngest-cli dev --no-discovery -u http://127.0.0.1:4000/api/inngest"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.3",
+    "@xyflow/react": "^12.12.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "express": "^5.2.1",
+    "inngest": "^4.21.0",
+    "lucide-react": "^0.577.0",
+    "openai": "^7.23.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.19.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "concurrently": "^9.2.1",
+    "inngest-cli": "1.45.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  }
+}
