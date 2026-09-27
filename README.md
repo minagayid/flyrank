@@ -121,3 +121,7 @@ build on — and the `skills/` folder here is the instruction library for your A
 ---
 
 *Track leads: Mirza Ašćerić (ML) · Hole (data engineering). Code under MIT (see `LICENSE`); data under `DATA_USE.md`.*
+
+## Consolidated projects
+
+The related FlyRank capstones are grouped under [`projects/`](projects/). See the [project index](CONSOLIDATED_PROJECTS.md) for links and source repositories.
