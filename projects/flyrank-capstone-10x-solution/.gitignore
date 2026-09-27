@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+data/*.sqlite
+data/*.sqlite3
+data/*.sqlite3-*
+reports/*.pdf
+.coverage
+coverage.xml
