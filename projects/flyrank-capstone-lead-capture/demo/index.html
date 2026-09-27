@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Customer site · Lead Capture demo</title>
+</head>
+<body>
+  <main>
+    <h1>Customer site on a separate origin</h1>
+    <p>This plain page is served on port 4173. The widget script and API run on port 8000.</p>
+    <div id="widget-mount"></div>
+    <!-- One-line snippet returned by GET /api/widgets/widget_demo_signup/embed. -->
+    <script defer src="http://127.0.0.1:8000/widget.v1.js?widget_id=widget_demo_signup"></script>
+  </main>
+</body>
+</html>
