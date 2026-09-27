@@ -1,0 +1,16 @@
+services:
+  studio:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      PUBLISHER: ${PUBLISHER:-mock_x}
+      DATABASE_PATH: /data/studio.db
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+      POLL_SECONDS: ${POLL_SECONDS:-2}
+      DEMO_SEED: ${DEMO_SEED:-true}
+    volumes:
+      - studio-data:/data
+
+volumes:
+  studio-data:

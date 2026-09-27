@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Social Media Studio</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.5 system-ui, sans-serif; background: #f3f6f8; color: #192a35; }
+    body { margin: 0; }
+    header { background: #123b4b; color: white; padding: 1.5rem max(1rem, calc((100vw - 1050px) / 2)); }
+    header h1 { margin: 0; font-size: 1.65rem; }
+    header p { margin: .25rem 0 0; color: #d7e6ec; }
+    main { max-width: 1050px; margin: 1.5rem auto; padding: 0 1rem 3rem; }
+    section, article { background: white; border: 1px solid #dce4e8; border-radius: .8rem; padding: 1rem; margin: 1rem 0; box-shadow: 0 3px 12px #1934450a; }
+    h2 { font-size: 1.2rem; margin: 0 0 .75rem; }
+    h3 { font-size: 1rem; margin: 0; }
+    textarea, input { width: 100%; box-sizing: border-box; border: 1px solid #aabac2; border-radius: .45rem; padding: .65rem; font: inherit; margin: .25rem 0 .7rem; }
+    textarea { min-height: 110px; resize: vertical; }
+    button { background: #087f78; color: white; border: 0; border-radius: .45rem; padding: .55rem .8rem; font: inherit; font-weight: 650; cursor: pointer; margin: .2rem .3rem .2rem 0; }
+    button.secondary { background: #e5eef1; color: #173948; }
+    button.danger { background: #9a3b3b; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #f2ad45; outline-offset: 2px; }
+    .row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .row > * { flex: 1; }
+    .muted { color: #52636b; font-size: .92rem; }
+    .badge { border-radius: 1rem; padding: .12rem .55rem; background: #e5eef1; color: #214654; font-size: .82rem; }
+    .status { min-height: 1.5rem; color: #15594e; }
+    .error { color: #9a3030; }
+    .body-copy { white-space: pre-wrap; overflow-wrap: anywhere; padding: .75rem; background: #f6f8f9; border-radius: .5rem; }
+    #history li { margin: .5rem 0; }
+    @media (min-width: 720px) { .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } .grid article { margin: 0; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Social Media Studio</h1>
+    <p>Draft, validate, review, schedule, and track each platform-specific post.</p>
+  </header>
+  <main>
+    <p id="status" class="status" role="status" aria-live="polite">Loading your campaigns…</p>
+    <section>
+      <h2>Start a campaign</h2>
+      <label for="source">Paste a blog post in Markdown</label>
+      <textarea id="source" maxlength="20000" placeholder="Paste the source post here"></textarea>
+      <label for="source-url">Or use a public HTTP(S) article URL</label>
+      <input id="source-url" type="url" placeholder="https://example.com/article">
+      <button id="create">Save post and generate variants</button>
+      <p class="muted">The system stores the source first; every generated version is based on that saved copy.</p>
+    </section>
+    <section>
+      <h2>Variants for review</h2>
+      <div id="variants" class="grid"></div>
+    </section>
+    <section>
+      <h2>Publish history</h2>
+      <ol id="history"></ol>
+    </section>
+  </main>
+  <script>
+    const statusBox = document.querySelector('#status');
+    const variantsBox = document.querySelector('#variants');
+    const historyBox = document.querySelector('#history');
+    const status = (message, isError = false) => { statusBox.textContent = message; statusBox.classList.toggle('error', isError); };
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, { ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } });
+      const data = response.status === 204 ? null : await response.json();
+      if (!response.ok) throw new Error(data?.detail?.errors?.join('; ') || data?.detail || data?.error || `Request failed (${response.status})`);
+      return data;
+    }
+
+    function renderVariant(item) {
+      const card = document.createElement('article');
+      const top = document.createElement('div'); top.className = 'row';
+      const heading = document.createElement('h3'); heading.textContent = item.platform.replace('mock_', 'Mock ').replace('_', ' ').toUpperCase();
+      const badge = document.createElement('span'); badge.className = 'badge'; badge.textContent = item.status;
+      top.append(heading, badge);
+      const copy = document.createElement('p'); copy.className = 'body-copy'; copy.textContent = item.body;
+      const scheduleLabel = document.createElement('label'); scheduleLabel.textContent = 'Schedule time (your local time)';
+      const schedule = document.createElement('input'); schedule.type = 'datetime-local';
+      const defaultTime = new Date(Date.now() + 120000); defaultTime.setSeconds(0, 0);
+      schedule.value = new Date(defaultTime.getTime() - defaultTime.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+      const controls = document.createElement('div');
+      const approve = document.createElement('button'); approve.textContent = 'Approve'; approve.disabled = item.status === 'published';
+      approve.addEventListener('click', async () => { try { await api(`/variants/${item.id}`, { method: 'PATCH', body: JSON.stringify({ decision: 'approve' }) }); await refresh(); status('Variant approved.'); } catch (e) { status(e.message, true); } });
+      const reject = document.createElement('button'); reject.className = 'danger'; reject.textContent = 'Reject';
+      reject.addEventListener('click', async () => { try { await api(`/variants/${item.id}`, { method: 'PATCH', body: JSON.stringify({ decision: 'reject' }) }); await refresh(); status('Variant rejected.'); } catch (e) { status(e.message, true); } });
+      const send = document.createElement('button'); send.className = 'secondary'; send.textContent = 'Schedule';
+      send.addEventListener('click', async () => { try { await api(`/variants/${item.id}/schedule`, { method: 'POST', body: JSON.stringify({ scheduled_at: new Date(schedule.value).toISOString() }) }); await refresh(); status('Approved variant scheduled.'); } catch (e) { status(e.message, true); } });
+      controls.append(approve, reject, send);
+      card.append(top, copy, scheduleLabel, schedule, controls);
+      return card;
+    }
+
+    async function refresh() {
+      const [variants, history] = await Promise.all([api('/variants'), api('/history')]);
+      variantsBox.replaceChildren(...variants.map(renderVariant));
+      historyBox.replaceChildren(...history.map(item => {
+        const li = document.createElement('li');
+        const summary = `${item.platform} · ${item.outcome} · ${item.started_at}`;
+        li.textContent = item.message_ref ? `${summary} · message ${item.message_ref}` : `${summary}${item.error_summary ? ` · ${item.error_summary}` : ''}`;
+        return li;
+      }));
+      if (!variants.length) variantsBox.textContent = 'No variants yet.';
+      if (!history.length) historyBox.textContent = 'No publish attempts yet.';
+    }
+
+    document.querySelector('#create').addEventListener('click', async () => {
+      const markdown = document.querySelector('#source').value.trim();
+      const url = document.querySelector('#source-url').value.trim();
+      try {
+        if (Boolean(markdown) === Boolean(url)) throw new Error('Enter Markdown or a URL, not both.');
+        const post = await api('/posts', { method: 'POST', body: JSON.stringify(markdown ? { source_markdown: markdown } : { source_url: url }) });
+        await api(`/posts/${post.id}/generate`, { method: 'POST' });
+        document.querySelector('#source').value = ''; document.querySelector('#source-url').value = '';
+        await refresh(); status('Post saved and variants generated for review.');
+      } catch (e) { status(e.message, true); }
+    });
+
+    refresh().then(() => status('Ready. Choose a mock adapter for safe local publishing.')).catch(e => status(e.message, true));
+  </script>
+</body>
+</html>
