@@ -1,0 +1,21 @@
+{
+  "method": "logistic-regression",
+  "version": 1,
+  "trainedOn": "synthetic-curated-examples-v1",
+  "exampleCount": 38,
+  "intercept": -1.68992,
+  "weights": {
+    "budget_stated": 0.34616,
+    "budget_fit": 2.07377,
+    "decision_maker": 0.5623,
+    "concrete_scope": 0.04769,
+    "service_fit": 0.35842,
+    "timeline_defined": -0.10851,
+    "near_term": 0.33351,
+    "funding_intent": 0.66914,
+    "free_or_speculative": -1.28047,
+    "early_stage": -1.16625,
+    "unrealistic_timing": -0.69874,
+    "active_engagement": 0.67334
+  }
+}
