@@ -1,0 +1,7 @@
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.4
+matplotlib>=3.8
+# System tools installed by the notebook in Colab:
+# ncbi-datasets-cli
+# mmseqs2
