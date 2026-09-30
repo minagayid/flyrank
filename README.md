@@ -45,6 +45,12 @@ That runs the whole pipeline on the bundled sample and writes results to `output
 
 ---
 
+## Human transcript coding-status study
+
+The genetics extension is in [`notebooks/04_ncbi_human_transcript_coding_status.ipynb`](notebooks/04_ncbi_human_transcript_coding_status.ipynb). It uses current NCBI RefSeq human RNA data, a gene-grouped held-out split, baseline and k-mer models, and transcript-level biological error analysis.
+
+[Open Notebook 4 in Google Colab](https://colab.research.google.com/github/minagayid/flyrank/blob/main/notebooks/04_ncbi_human_transcript_coding_status.ipynb)
+
 ## What you get
 
 | Path | What it is |
