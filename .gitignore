@@ -26,6 +26,8 @@ outputs/*.csv
 # --- Intern work area ------------------------------------------------------
 # your experiments live in work/; datasets never enter git
 work/**/*.csv
+work/crispr_cache/
+outputs/crispr/site_seq_ranked_review.csv
 
 # --- Python / notebooks ----------------------------------------------------
 __pycache__/
