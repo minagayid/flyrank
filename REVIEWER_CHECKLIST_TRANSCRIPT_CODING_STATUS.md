@@ -17,8 +17,15 @@
 - [ ] Confirm the minimum-length rule is only `>=20 nt` and is justified as a malformed/empty-sequence floor.
 - [ ] Confirm short RNAs are retained rather than filtered out as a shortcut.
 - [ ] Confirm isoforms are grouped by NCBI GeneID before clustering.
-- [ ] Confirm MMseqs2 uses 80% nucleotide identity and 80% coverage, and that every modeling record inherits a cluster.
+- [ ] Confirm MMseqs2 uses 80% nucleotide identity and 80% coverage for the primary split, and that every modeling record inherits a cluster.
 - [ ] Confirm the assertions and printed tables show zero GeneID and cluster overlap between train, validation, and test.
+
+## MMseqs2 threshold sensitivity
+- [ ] Confirm the sweep covers 70%, 75%, 80%, 85%, 90%, and 95% nucleotide identity at fixed 80% coverage.
+- [ ] Inspect the train/test leakage matrix at every audit threshold, not only the split's own threshold.
+- [ ] Confirm own-threshold train/test overlap is zero for every split threshold.
+- [ ] Compare generalization metrics across thresholds with the model-selection choice held fixed.
+- [ ] Interpret threshold effects as sensitivity of the leakage/generalization trade-off, not as evidence that one identity threshold is universally correct.
 
 ## Modeling and interpretation
 - [ ] Confirm preprocessing is fit on training data only and tuning uses validation only.

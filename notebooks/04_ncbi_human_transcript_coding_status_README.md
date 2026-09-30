@@ -23,11 +23,19 @@ Isoforms are grouped by NCBI `GeneID` first. The longest transcript per gene is 
 - Test metrics: precision, recall, F1, AUROC, AUPRC, confusion matrix, and bootstrap 95% intervals. Validation-only seed sensitivity is reported for seeds 42, 43, and 44.
 - Error analysis breaks down results by label, GFF3 biotype, length quartile, GC fraction, and individual uncertain errors.
 
+## MMseqs2 threshold sensitivity
+The notebook now tests identity thresholds of **70%, 75%, 80%, 85%, 90%, and 95%**, with coverage fixed at 80%. It reruns MMseqs2 on the same per-GeneID representative set, creates a threshold-specific grouped split, and prints:
+
+1. A train/test leakage matrix showing shared clusters when each split is audited at each identity threshold.
+2. A generalization table with split size, cluster count, own-threshold overlap, 70%-audit overlap, precision, recall, F1, AUROC, and AUPRC.
+
+The model-selection choice (`C`) from the primary validation workflow is held fixed during this sensitivity analysis; thresholds are not tuned on test performance. The final manifest includes both result tables.
+
 ## Rerun in Google Colab
 1. Open `04_ncbi_human_transcript_coding_status.ipynb` in Colab.
 2. Run all cells from top to bottom. The first setup cell installs `ncbi-datasets-cli` and `mmseqs2` if needed.
 3. The download may take time and requires internet access. The notebook caches the package under `ncbi_refseq_cache/`.
 4. Set `MAX_MODEL_PER_CLASS = None` only after confirming the baseline runtime; the audit already covers all parsed eligible records.
-5. The last cell writes `transcript_coding_status_manifest.json` with counts, versions, source URL, split settings, and zero-overlap assertions.
+5. The last cells write `transcript_coding_status_manifest.json` with counts, versions, source URL, split settings, zero-overlap assertions, the threshold leakage matrix, and threshold generalization results.
 
 No result numbers are hard-coded in this README: run the notebook to generate them from the stated release and record the manifest with the notebook output.
