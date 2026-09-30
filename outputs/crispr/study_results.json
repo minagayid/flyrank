@@ -15,6 +15,7 @@
   "features": [
     "mismatch_count",
     "seed_mismatch_count",
+    "extended_seed_mismatch_count",
     "distal_mismatch_count",
     "gc_fraction",
     "guide_gc_fraction",
@@ -40,6 +41,7 @@
     "mismatch_pos_20"
   ],
   "seed_definition": "mismatch positions 13-20 (1-indexed) are the PAM-proximal audit window; validate this convention against the chosen genome/assay before operational use.",
+  "extended_seed_definition": "positions 11-20 are an extended PAM-proximal window; its start and weight are selected inside each outer training fold only.",
   "baseline": {
     "precision": 1.0,
     "recall": 0.15118821985712202,
@@ -62,7 +64,7 @@
     "recall": 0.998833649220003,
     "balanced_accuracy": 0.9994168246100015,
     "auroc": 1.0,
-    "auprc": 0.9999999999999999,
+    "auprc": 1.0,
     "confusion_matrix": [
       [
         9,
@@ -82,11 +84,35 @@
     "top_5pct_enrichment": 8.424426229508196
   },
   "activity_model": {
-    "spearman_rho": 0.1857164870210854,
-    "top_5pct_nonzero_activity_rate": 0.2,
+    "spearman_rho": 0.21323263051134597,
+    "top_5pct_nonzero_activity_rate": 0.2360655737704918,
     "overall_nonzero_activity_rate": 0.022962112514351322,
-    "top_5pct_enrichment": 8.709999999999999
+    "top_5pct_enrichment": 10.280655737704917
   },
+  "activity_random_forest_comparison": {
+    "spearman_rho": 0.19091066579212318,
+    "top_5pct_nonzero_activity_rate": 0.20655737704918034,
+    "overall_nonzero_activity_rate": 0.022962112514351322,
+    "top_5pct_enrichment": 8.995573770491804
+  },
+  "activity_model_selection": [
+    {
+      "extended_seed_start_position": 11,
+      "extended_seed_weight": 4.0
+    },
+    {
+      "extended_seed_start_position": 11,
+      "extended_seed_weight": 4.0
+    },
+    {
+      "extended_seed_start_position": 10,
+      "extended_seed_weight": 5.0
+    },
+    {
+      "extended_seed_start_position": 11,
+      "extended_seed_weight": 4.0
+    }
+  ],
   "model_auroc_ci95": [
     1.0,
     1.0

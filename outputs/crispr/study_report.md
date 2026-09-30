@@ -6,16 +6,17 @@ It is a computational review aid, not a guide-design approval or experimental su
 - Rows: 6,868; intended guides: 9; off-target rows: 6,859
 - Baseline AUROC/AUPRC: 1.000 / 1.000
 - Grouped logistic AUROC/AUPRC: 1.000 / 1.000
-- Grouped activity model Spearman rho: 0.186; top-5% enrichment: 8.71x
+- Nested extended-seed activity ranker Spearman rho: 0.213; top-5% enrichment: 10.28x
+- Legacy random-forest comparison Spearman rho: 0.191
 - Grouped logistic AUROC 95% bootstrap interval: [1.000, 1.000]
 - Grouped logistic AUPRC 95% bootstrap interval: [1.000, 1.000]
 
 ## Reuse of the new FlyRank notebook ideas
 
 1. Position-aware nucleotide features replace generic transcript k-mers.
-2. Guide-grouped folds prevent the same intended guide from appearing in train and test.
-3. A transparent mismatch baseline is reported beside the learned model.
-4. The main ranking task predicts assay activity as well as reporting the simple ON/OFF sanity screen.
+2. An extended PAM-proximal mismatch feature is tuned only inside training folds.
+3. Guide-grouped folds prevent the same intended guide from appearing in train and test.
+4. The tuned ranker is reported beside the original mismatch baseline and legacy random forest.
 5. Bootstrap intervals and provenance are saved with the result, and biological limitations are explicit.
 
 ## Safety and interpretation

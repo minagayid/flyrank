@@ -106,6 +106,7 @@ def feature_frame(data: pd.DataFrame) -> pd.DataFrame:
         row = {
             "mismatch_count": r.mismatch_count,
             "seed_mismatch_count": r.seed_mismatch_count,
+            "extended_seed_mismatch_count": sum(r.mismatch_vector[10:20]),
             "distal_mismatch_count": r.distal_mismatch_count,
             "gc_fraction": r.gc_fraction,
             "guide_gc_fraction": r.guide_gc_fraction,
@@ -113,6 +114,29 @@ def feature_frame(data: pd.DataFrame) -> pd.DataFrame:
         row.update({f"mismatch_pos_{i+1:02d}": int(v) for i, v in enumerate(r.mismatch_vector)})
         rows.append(row)
     return pd.DataFrame(rows, index=data.index)
+
+
+def nested_extended_seed_rank(mm: np.ndarray, y: np.ndarray, groups: np.ndarray) -> tuple[np.ndarray, list[dict]]:
+    """Tune the PAM-proximal window and weight inside each outer fold only."""
+    outer = GroupKFold(n_splits=4)
+    grid = [(start, weight) for start in [8, 9, 10, 11, 12] for weight in np.arange(1.0, 6.1, 0.5)]
+    prediction = np.zeros(len(y), dtype=float)
+    selections = []
+    for train_ix, test_ix in outer.split(mm, y, groups):
+        inner = GroupKFold(n_splits=3)
+        best = None
+        for start, weight in grid:
+            scores = []
+            for inner_train, inner_valid in inner.split(mm[train_ix], y[train_ix], groups[train_ix]):
+                rank = -(mm[train_ix][inner_valid, :start].sum(axis=1) + weight * mm[train_ix][inner_valid, start:].sum(axis=1))
+                scores.append(float(spearmanr(y[train_ix][inner_valid], rank).statistic))
+            candidate = (float(np.nanmean(scores)), start, float(weight))
+            if best is None or candidate[0] > best[0]:
+                best = candidate
+        _, start, weight = best
+        prediction[test_ix] = -(mm[test_ix, :start].sum(axis=1) + weight * mm[test_ix, start:].sum(axis=1))
+        selections.append({"extended_seed_start_position": int(start + 1), "extended_seed_weight": float(weight)})
+    return prediction, selections
 
 
 def bootstrap_ci(y: np.ndarray, score: np.ndarray, metric, seed: int = SEED, n: int = 1000) -> list[float]:
@@ -172,6 +196,8 @@ def main() -> None:
     activity = data.loc[activity_mask, "activity_4nM"].to_numpy(dtype=float)
     activity_X = X.loc[activity_mask]
     activity_groups = groups[activity_mask]
+    activity_mm = np.asarray(data.loc[activity_mask, "mismatch_vector"].tolist(), dtype=int)
+    engineered_prediction, fold_selections = nested_extended_seed_rank(activity_mm, np.log1p(activity), activity_groups)
     activity_model = RandomForestRegressor(
         n_estimators=300, min_samples_leaf=5, max_features="sqrt", random_state=SEED, n_jobs=-1
     )
@@ -181,7 +207,7 @@ def main() -> None:
     )
     activity_baseline = -baseline_raw[activity_mask].astype(float)
     activity_prediction_full = np.full(len(data), np.nan)
-    activity_prediction_full[activity_mask] = activity_prediction
+    activity_prediction_full[activity_mask] = engineered_prediction
 
     results = {
         "study": "SITE-seq guide-grouped off-target risk classification and activity ranking",
@@ -199,11 +225,14 @@ def main() -> None:
         },
         "features": list(X.columns),
         "seed_definition": "mismatch positions 13-20 (1-indexed) are the PAM-proximal audit window; validate this convention against the chosen genome/assay before operational use.",
+        "extended_seed_definition": "positions 11-20 are an extended PAM-proximal window; its start and weight are selected inside each outer training fold only.",
         "baseline": evaluate(y, baseline_score, threshold=0.5),
         "model": evaluate(y, model_score, threshold=0.5),
         "activity_target": "log1p(SITE-seq 4 nM cleavage signal; 'bd' mapped to 0)",
         "activity_baseline": regression_metrics(activity, activity_baseline),
-        "activity_model": regression_metrics(activity, np.expm1(activity_prediction)),
+        "activity_model": regression_metrics(activity, engineered_prediction),
+        "activity_random_forest_comparison": regression_metrics(activity, np.expm1(activity_prediction)),
+        "activity_model_selection": fold_selections,
         "model_auroc_ci95": bootstrap_ci(y, model_score, roc_auc_score),
         "model_auprc_ci95": bootstrap_ci(y, model_score, average_precision_score),
         "provenance": provenance,
@@ -219,7 +248,7 @@ def main() -> None:
     out["baseline_risk"] = baseline_score
     out["model_off_target_risk"] = model_score
     out["activity_4nM"] = data["activity_4nM"].to_numpy()
-    out["predicted_log1p_activity_4nM"] = activity_prediction_full
+    out["engineered_activity_rank_score"] = activity_prediction_full
     out["review_priority"] = pd.cut(model_score, [-0.01, 0.33, 0.66, 1.01], labels=["lower", "middle", "higher"])
     out.sort_values(["model_off_target_risk", "mismatch_count"], ascending=[False, True]).to_csv(OUTPUT / "site_seq_ranked_review.csv", index=False)
     (OUTPUT / "study_results.json").write_text(json.dumps(results, indent=2))
@@ -232,16 +261,17 @@ def main() -> None:
         f"- Rows: {results['rows']:,}; intended guides: {results['guides']}; off-target rows: {results['off_target_rows']:,}",
         f"- Baseline AUROC/AUPRC: {results['baseline']['auroc']:.3f} / {results['baseline']['auprc']:.3f}",
         f"- Grouped logistic AUROC/AUPRC: {results['model']['auroc']:.3f} / {results['model']['auprc']:.3f}",
-        f"- Grouped activity model Spearman rho: {results['activity_model']['spearman_rho']:.3f}; top-5% enrichment: {results['activity_model']['top_5pct_enrichment']:.2f}x",
+        f"- Nested extended-seed activity ranker Spearman rho: {results['activity_model']['spearman_rho']:.3f}; top-5% enrichment: {results['activity_model']['top_5pct_enrichment']:.2f}x",
+        f"- Legacy random-forest comparison Spearman rho: {results['activity_random_forest_comparison']['spearman_rho']:.3f}",
         f"- Grouped logistic AUROC 95% bootstrap interval: [{results['model_auroc_ci95'][0]:.3f}, {results['model_auroc_ci95'][1]:.3f}]",
         f"- Grouped logistic AUPRC 95% bootstrap interval: [{results['model_auprc_ci95'][0]:.3f}, {results['model_auprc_ci95'][1]:.3f}]",
         "",
         "## Reuse of the new FlyRank notebook ideas",
         "",
         "1. Position-aware nucleotide features replace generic transcript k-mers.",
-        "2. Guide-grouped folds prevent the same intended guide from appearing in train and test.",
-        "3. A transparent mismatch baseline is reported beside the learned model.",
-        "4. The main ranking task predicts assay activity as well as reporting the simple ON/OFF sanity screen.",
+        "2. An extended PAM-proximal mismatch feature is tuned only inside training folds.",
+        "3. Guide-grouped folds prevent the same intended guide from appearing in train and test.",
+        "4. The tuned ranker is reported beside the original mismatch baseline and legacy random forest.",
         "5. Bootstrap intervals and provenance are saved with the result, and biological limitations are explicit.",
         "",
         "## Safety and interpretation",
