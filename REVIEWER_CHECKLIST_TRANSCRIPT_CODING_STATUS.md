@@ -1,37 +1,40 @@
 # Bioinformatics reviewer checklist
 
 ## Question and scope
-- [ ] The question is limited to classifying human RefSeq transcript records as `NM_`/`NR_` operational coding status.
-- [ ] FLIP2 results and variant information are not mixed into this study.
 
-## Data and labels
-- [ ] Confirm assembly `GCF_000001405.40` / GRCh38.p14.
-- [ ] Confirm the downloaded annotation release, expected as `GCF_000001405.40-RS_2025_08`, from the package report.
-- [ ] Confirm the NCBI Datasets CLI version and download timestamp are present in the manifest.
-- [ ] Review NCBI Datasets/RefSeq data-use terms before redistribution.
-- [ ] Review NM_ and NR_ counts, missingness, duplicates, and class balance.
-- [ ] Review all `NR_` `gene_biotype` values, including lncRNA, miRNA, snRNA, tRNA, snoRNA, and rRNA where present.
-- [ ] Inspect prefix-vs-GFF3 biotype mismatches; do not assume every mismatch is an error.
+- [ ] Confirm the question is limited to sequence prediction of annotated coding status in human RefSeq transcripts.
+- [ ] Confirm the fixed scope is GCF_000001405.40 / GRCh38.p14 / GCF_000001405.40-RS_2025_08.
+- [ ] Confirm FLIP2 results and variant information are not mixed into this study.
 
-## QC and leakage control
-- [ ] Confirm the minimum-length rule is only `>=20 nt` and is justified as a malformed/empty-sequence floor.
-- [ ] Confirm short RNAs are retained rather than filtered out as a shortcut.
-- [ ] Confirm isoforms are grouped by NCBI GeneID before clustering.
-- [ ] Confirm MMseqs2 uses 80% nucleotide identity and 80% coverage for the primary split, and that every modeling record inherits a cluster.
-- [ ] Confirm the assertions and printed tables show zero GeneID and cluster overlap between train, validation, and test.
+## Source and labels
 
-## MMseqs2 threshold sensitivity
-- [ ] Confirm the sweep covers 70%, 75%, 80%, 85%, 90%, and 95% nucleotide identity at fixed 80% coverage.
-- [ ] Inspect the train/test leakage matrix at every audit threshold, not only the split's own threshold.
-- [ ] Confirm own-threshold train/test overlap is zero for every split threshold.
-- [ ] Compare generalization metrics across thresholds with the model-selection choice held fixed.
-- [ ] Interpret threshold effects as sensitivity of the leakage/generalization trade-off, not as evidence that one identity threshold is universally correct.
+- [ ] Check that the RNA FASTA, genomic GFF3, assembly report, and checksum list come from the exact NCBI release directory.
+- [ ] Confirm the exact NCBI checksum-list SHA-256 is pinned, the original NCBI MD5 values are checked when compressed files are available, and Kaggle-expanded payloads are checked against pinned SHA-256 values.
+- [ ] Review the versioned NM_/NR_ accession match between FASTA and GFF3 and confirm GFF3 seqids are restricted to the assembly-report assembled molecules (chromosomes 1–22, X, Y, and mitochondrion).
+- [ ] Confirm a coding label requires CDS evidence.
+- [ ] Confirm a noncoding label requires no CDS plus an explicit noncoding feature or biotype.
+- [ ] Review the counts for unmatched, ambiguous, pseudogene, prefix-disagreement, missing-GeneID, invalid-sequence, and duplicate-accession records.
+- [ ] Confirm XM_/XR_ predicted models and unresolved records are excluded.
+- [ ] Review NCBI data-use terms before redistributing source files.
+
+## Sampling and leakage
+
+- [ ] Confirm the audit covers the full parsed accession set before the modeling cap.
+- [ ] Confirm the 20 nt rule is only a malformed/empty-sequence floor and short RNA classes remain eligible.
+- [ ] Confirm class sampling is reproducible and capped at 3,000 eligible records per label.
+- [ ] Confirm every selected transcript is clustered and all transcripts for one GeneID are kept together.
+- [ ] Confirm exact-sequence matches and MMseqs2 clusters are joined into connected components before splitting.
+- [ ] Confirm zero GeneID, exact-sequence, cluster, and component overlap across train, validation, and test.
+- [ ] Review the iterative two-strand MMseqs2 all-vs-all checks across each split boundary, including the aggregate repair history; confirm detected sequence links are added to connected groups and final searches return zero hits. Interpret zero detected hits as conditional on the search settings, not an exhaustive homology proof.
+- [ ] Confirm the 70%-95% identity sensitivity splits at fixed 80% coverage retain the primary pairwise repair links, then interpret the results as threshold sensitivity, not a universal cutoff.
 
 ## Modeling and interpretation
-- [ ] Confirm preprocessing is fit on training data only and tuning uses validation only.
-- [ ] Compare the majority baseline, interpretable length/GC/3-mer model, and TF-IDF model on the same split.
-- [ ] Review test precision, recall, F1, AUROC, AUPRC, confusion matrix, and bootstrap intervals.
-- [ ] Review validation-only seed sensitivity.
-- [ ] Inspect errors by length, GC, biotype, and uncertain individual cases.
-- [ ] Treat performance as evidence about this RefSeq sampling frame and operational labels, not as a validated biological coding predictor.
-- [ ] Consider an external chromosome, assembly, or independent annotation holdout before making stronger claims.
+
+- [ ] Confirm preprocessing and regularization selection use training and validation data only.
+- [ ] Compare the majority baseline, interpretable 3-mer model, and TF-IDF model on the same primary split.
+- [ ] Review held-out metrics, denominators, confusion matrix, and connected-component bootstrap intervals.
+- [ ] Review aggregate error patterns by label, biotype, length, and GC content.
+- [ ] Confirm the repeated threshold sweep is described as descriptive test evaluation and does not choose the primary model.
+- [ ] Confirm transcript-level sampling and transcript-weighted point estimates are stated as a limitation when genes have multiple isoforms.
+- [ ] Treat results as annotation-snapshot classification, not evidence of biological translation or clinical validity.
+- [ ] Require an independent chromosome/assembly test before stronger generalization claims.
